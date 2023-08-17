@@ -1,4 +1,4 @@
-import { Box, Flex, Image } from '@chakra-ui/react'
+import { Box, Flex, Image, Text } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import StarRatingComponent from 'react-star-rating-component'
 import { useLanguage } from '../../hooks/useLanguage'
@@ -24,15 +24,13 @@ const DetailsSection: React.FC<Props> = ({ product }) => {
 
     return (
         <Box
-            filter={
-                'drop-shadow(0px 20px 25px rgba(0, 0, 0, 0.10)) drop-shadow(0px 8px 10px rgba(0, 0, 0, 0.10))'
-            }
-            padding={'15px 20px'}
+            padding={'15px 5px'}
             className="bg-[#fff] md:bg-transparent  md:w-auto  flex-grow self-center lg:self-start md:mt-0  lg:ltr:ml-4 lg:rtl:mr-4 md:py-0 rounded-tl-xl rounded-tr-xl flex flex-col z-10"
         >
             <Flex
-                justifyContent={'space-between'}
-                alignItems={'flex-start'}
+                justifyContent={'center'}
+                alignItems={'center'}
+                flexDirection="column"
             >
                 <h2
                     className="text-palette-mute whitespace-normal border_radius_all"
@@ -40,11 +38,16 @@ const DetailsSection: React.FC<Props> = ({ product }) => {
                         fontSize: '20px',
                         fontWeight: '600',
                         color: '#000',
-                        marginBottom: '20px',
                     }}
                 >
                     {product.descriptor.name}
                 </h2>
+                <Text
+                    mb={'10px'}
+                    fontSize={'14px'}
+                >
+                    by Coursera
+                </Text>
 
                 {product.tags.foodType ? (
                     product.tags.foodType === 'veg' ? (
@@ -63,15 +66,18 @@ const DetailsSection: React.FC<Props> = ({ product }) => {
                 ) : null}
             </Flex>
             <hr className="mt-1 hidden md:block" />
-            <div className="flex items-start flex-wrap relative">
-                <div className="flex-grow">
-                    <div className="flex items-center self-center">
+            <div className="flex items-start flex-wrap relative ">
+                <div className="flex-grow ">
+                    <div
+                        className="flex items-center self-center"
+                        style={{ justifyContent: 'center' }}
+                    >
                         <StarRatingComponent
                             name="product_rate"
                             starCount={5}
                             value={parseFloat(product.tags.rating)}
                         />
-                        <p className="text-sm text-palette-mute rtl:mr-2 ltr:ml-2 pl-1">
+                        <p className="text-sm text-palette-mute rtl:mr-2 ltr:ml-2 pl-1 ">
                             {parseFloat(product.tags.rating)} {t.stars}
                         </p>
                     </div>
@@ -80,7 +86,12 @@ const DetailsSection: React.FC<Props> = ({ product }) => {
                         dangerouslySetInnerHTML={{
                             __html: product.descriptor.long_desc,
                         }}
-                        className="mt-4 product_description_text"
+                        className="mt-4 product_description_text border-2 border_radius_all"
+                        style={{
+                            padding: '0px 10px',
+                            maxHeight: '400px',
+                            overflow: 'auto',
+                        }}
                     ></div>
                 </div>
                 <CallToAction product={product} />
