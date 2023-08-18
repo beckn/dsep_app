@@ -21,7 +21,7 @@ const CardWithCheckBox: React.FC<CardWithCheckBoxPropsModel> = (props) => {
             <CardBody padding={'15px 20px'}>
                 <Box
                     className={styles.checkbox}
-                    mb={'15px'}
+                    // mb={'15px'}
                     fontSize={'15px'}
                 >
                     <input
@@ -40,7 +40,7 @@ const CardWithCheckBox: React.FC<CardWithCheckBoxPropsModel> = (props) => {
                         </Text>
                     </label>
                 </Box>
-                <Box
+                {/* <Box
                     pointerEvents={'none'}
                     opacity={'0.5'}
                     className={styles.checkbox}
@@ -63,7 +63,7 @@ const CardWithCheckBox: React.FC<CardWithCheckBoxPropsModel> = (props) => {
                             {t.clickAndCollect}
                         </Text>
                     </label>
-                </Box>
+                </Box> */}
             </CardBody>
         </Card>
     )

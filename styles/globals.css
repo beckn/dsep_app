@@ -4,8 +4,9 @@
 
 @layer base {
     :root {
-        --color-primary: 167, 27, 74; /* #A71B4A*/
+        --color-primary: 58, 165, 225, 1; /* #3AA5E1*/
         --color-secondary: 74, 76, 90; /* #4a4c5a*/
+        --color-bold-text: 36, 42, 54; /* #242A36*/
 
         --color-bg: 243, 244, 245; /* #f3f4f5*/
         --color-bg-side: 252, 251, 255; /* #fcfdff*/
@@ -17,7 +18,7 @@
         --house-category-bgc: #ccd5ae;
         --toy-category-bgc: #cce3de;
         --stationery-category-bgc: #fbb13c;
-        --disabled-btn-color: 234, 207, 219; /*"#EACFDB"*/
+        --disabled-btn-color: 177, 215, 237; /*"#B1D7ED"*/
 
         --color-text-base: 66, 71, 80; /* #424750*/
         --color-text-muted: 107, 114, 128; /*#6b7280*/
@@ -154,10 +155,10 @@ a {
 .slick-dots li button::before {
     font-size: 12px !important;
 }
-.image_section > span {
+/* .image_section > span {
     width: 220px !important;
     height: 240px !important;
-}
+} */
 
 .slick-prev.slick-disabled:before,
 .slick-next.slick-disabled:before {
@@ -268,4 +269,7 @@ select:-webkit-autofill:focus {
     /* list-style-position: inside; */
 
     margin-left: 16px;
+}
+.font-bold {
+    color: rgba(var(--color-primary));
 }
