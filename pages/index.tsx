@@ -44,7 +44,7 @@ const MobileLogin = () => {
     const { t, locale } = useLanguage()
 
     return (
-        <Box padding={'0 21px'}>
+        <Box padding={'0 11px'}>
             <Box mt={'30px'}>
                 {/* eslint-disable-next-line jsx-a11y/alt-text */}
                 <Image src={LoginIcon} />
