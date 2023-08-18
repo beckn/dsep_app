@@ -1,12 +1,4 @@
 const en: { [key: string]: string } = {
-  homeHeading: "Training & Courses",
-  headingSpan: "for All",
-  homeText:
-    "Discover growth through courses. Assess goals, research, choose. Adapt to trends, learn continuously. Skills empower success in a dynamic world.",
-  footerText: "Powered by",
-  cartEmpty: "The Cart is Empty",
-  cartEmptySpan: "Look like you haven’t made your choice yet",
-  goBackBtn: "Go back home",
   mainPage: "ZiShop Main Page",
   search: "Search",
   login: "Login",
@@ -175,7 +167,6 @@ const en: { [key: string]: string } = {
   processor: "CPU",
   ram: "RAM",
   screen: "Screen",
-
   resolution: "Resolution",
   display_type: "Display Type",
   viewing_angle: "Viewing Angle",
@@ -183,7 +174,6 @@ const en: { [key: string]: string } = {
   refresh_rate: "Refresh Rate",
   panel_technology: "Panel Technology",
   input_output_types: "Input/Output Types",
-
   true: "Yes",
   false: "No",
   bluetooth: "Bluetooth",
@@ -195,7 +185,6 @@ const en: { [key: string]: string } = {
   wireless_standby_time: "Battery life in standby mode",
   connectionType: "Connection Type",
   connectors: "Connectors",
-
   multimedia_keys: "Multimedia Keys",
   number_of_buttons: "Number Of Buttons(Including Scroll Wheel)",
   width: "Width",
@@ -207,7 +196,6 @@ const en: { [key: string]: string } = {
   backlit_keys: "Backlit Keys",
   ergonomic_design: "Ergonomic Design",
   designed_for_gaming: "Designed For Gaming",
-
   graphic: "Graphic",
   ports: "Ports",
   ssd: "SSD Hard",
@@ -241,7 +229,6 @@ const en: { [key: string]: string } = {
   /**
    * New strings that are added
    */
-
   BrowseByCategory: "Browse by Category",
   meatAndFish: "Meat & Fish",
   fruitsVegetablesTitle: "Fruits and Vegetables",
@@ -380,5 +367,13 @@ const en: { [key: string]: string } = {
   addCommentsHere: "Add your comments here",
   writeExperience: "Write about your experience..",
   completed: "Completed",
+  homeHeading: "Training & Courses",
+  headingSpan: "for All",
+  homeText:
+    "Discover growth through courses. Assess goals, research, choose. Adapt to trends, learn continuously. Skills empower success in a dynamic world.",
+  footerText: "Powered by",
+  cartEmpty: "The Cart is Empty",
+  cartEmptySpan: "Look like you haven’t made your choice yet",
+  goBackBtn: "Go back home",
 };
 export default en;
