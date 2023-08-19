@@ -386,52 +386,7 @@ const OrderDetails = () => {
                         {RenderOrderStatusList(res)}
                     </CardBody>
                 </Accordion>
-            ))}
-
-            <Accordion accordionHeader={t.shipping}>
-                <CardBody
-                    pt={'unset'}
-                    pb={'15px'}
-                >
-                    <Box>
-                        <Stack
-                            divider={<StackDivider />}
-                            spacing="4"
-                        >
-                            <Flex alignItems={'center'}>
-                                {/* eslint-disable-next-line jsx-a11y/alt-text */}
-                                <Image
-                                    src={nameIcon}
-                                    pr={'12px'}
-                                />
-                                <Text fontSize={'17px'}>
-                                    {shippingDetails.name}
-                                </Text>
-                            </Flex>
-                            <Flex alignItems={'center'}>
-                                {/* eslint-disable-next-line jsx-a11y/alt-text */}
-                                <Image
-                                    src={locationIcon}
-                                    pr={'12px'}
-                                />
-                                <Text fontSize={'15px'}>
-                                    {shippingDetails.address}
-                                </Text>
-                            </Flex>
-                            <Flex alignItems={'center'}>
-                                {/* eslint-disable-next-line jsx-a11y/alt-text */}
-                                <Image
-                                    src={CallphoneIcon}
-                                    pr={'12px'}
-                                />
-                                <Text fontSize={'15px'}>
-                                    {shippingDetails.phone}
-                                </Text>
-                            </Flex>
-                        </Stack>
-                    </Box>
-                </CardBody>
-            </Accordion>
+            ))}       
             <Accordion accordionHeader={t.paymentText}>
                 <CardBody
                     pt={'unset'}
@@ -447,18 +402,7 @@ const OrderDetails = () => {
                             {t.currencySymbol}
                             {subTotal}
                         </Text>
-                    </Flex>
-                    <Flex
-                        justifyContent={'space-between'}
-                        alignItems={'center'}
-                        pb={'20px'}
-                    >
-                        <Text>{t.deliveryCharge}</Text>
-                        <Text>
-                            {t.currencySymbol}
-                            {totalDeliveryCharge}
-                        </Text>
-                    </Flex>
+                    </Flex>       
                     <Divider />
                 </CardBody>
                 <CardBody
@@ -477,15 +421,6 @@ const OrderDetails = () => {
                             {t.currencySymbol}
                             {subTotal + totalDeliveryCharge}
                         </Text>
-                    </Flex>
-                    <Flex
-                        fontSize={'15px'}
-                        justifyContent={'space-between'}
-                        alignItems={'center'}
-                        pb={'15px'}
-                    >
-                        <Text>{t.status}</Text>
-                        <Text>{orderState}</Text>
                     </Flex>
                     <Flex
                         fontSize={'15px'}

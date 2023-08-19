@@ -8,11 +8,14 @@ import { responseDataActions } from '../store/responseData-slice'
 import { RetailItem } from '../lib/types/products'
 import Loader from '../components/loader/Loader'
 import { useLanguage } from '../hooks/useLanguage'
+import { useRouter } from 'next/router'
 
 //Mock data for testing search API. Will remove after the resolution of CORS issue
 
 const Search = () => {
     const [items, setItems] = useState([])
+    const router = useRouter();
+    const searchKeyword = router.query?.searchTerm || '';
     const dispatch = useDispatch()
     const [providerId, setProviderId] = useState('')
     const { t, locale } = useLanguage()
@@ -28,6 +31,10 @@ const Search = () => {
     }
 
     useEffect(() => {
+        if (!!searchKeyword) {
+            localStorage.removeItem('searchItems')
+            fetchDataForSearch();
+        }
         if (localStorage) {
             const stringifiedOptiontags = localStorage.getItem('optionTags')
             const stringifiedSelectedOption =
@@ -42,12 +49,6 @@ const Search = () => {
         }
     }, [])
 
-    const categoryName = () => {
-        if (tagValue && categoryMap[tagValue]) {
-            return categoryMap[tagValue][locale] || categoryMap[tagValue]['en']
-        }
-    }
-
     const searchPayload = {
         context: {
             domain: 'retail',
@@ -55,8 +56,7 @@ const Search = () => {
         message: {
             criteria: {
                 dropLocation: '48.85041854,2.343660801',
-                categoryName: categoryName(),
-                providerId: providerId,
+                categoryName: 'Courses',
             },
         },
     }
@@ -137,7 +137,7 @@ const Search = () => {
                 mt={'-20px'}
             >
                 <SearchBar
-                    searchString={''}
+                    searchString={searchKeyword}
                     handleChange={(text: string) => {
                         localStorage.removeItem('searchItems')
                         fetchDataForSearch()
@@ -150,9 +150,9 @@ const Search = () => {
                         <Loader
                             stylesForLoadingText={{
                                 fontWeight: '600',
-                                fontSize: '17px',
+                                fontSize: '16px',
                             }}
-                            subLoadingText={t.catalogSubLoader}
+                            subLoadingText={t.coursesCatalogLoader}
                             loadingText={t.catalogLoader}
                         />
                     </div>
