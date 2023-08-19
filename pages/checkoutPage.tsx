@@ -213,9 +213,9 @@ const CheckoutPage = () => {
                             <>
                                 <ItemDetails
                                     title={item.descriptor.name}
-                                    description={item.descriptor.short_desc}
+                                    provider={(item as any).bppName }
                                     quantity={item.quantity}
-                                    price={`${t.currencySymbol}${item.totalPrice}`}
+                                    price={item.totalPrice}
                                 />
                             </>
                         )
