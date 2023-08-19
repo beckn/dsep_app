@@ -375,5 +375,7 @@ const en: { [key: string]: string } = {
   cartEmpty: "The Cart is Empty",
   cartEmptySpan: "Look like you haven’t made your choice yet",
   goBackBtn: "Go back home",
+  viewCourseBtn: "View Course Details",
+  
 };
 export default en;
