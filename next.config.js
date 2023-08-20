@@ -4,11 +4,6 @@ const nextConfig = {
     reactStrictMode: false,
     output: 'export',
     trailingSlash: true,
-    i18n: {
-        locales: ['en', 'fa'],
-        defaultLocale: 'en',
-        localeDetection: false,
-    },
     images: {
         loader: 'akamai',
         path: '',

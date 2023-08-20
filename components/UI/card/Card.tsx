@@ -131,7 +131,7 @@ const Card: React.FC<Props> = ({ product }) => {
                                     fontSize={'12px'}
                                     pl={'5px'}
                                 >
-                                    {product.tags.rating}
+                                    {product.tags.Rating}
                                 </Text>
                             </Flex>
                         </Flex>
