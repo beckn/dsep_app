@@ -75,10 +75,10 @@ const DetailsSection: React.FC<Props> = ({ product }) => {
                         <StarRatingComponent
                             name="product_rate"
                             starCount={5}
-                            value={parseFloat(product.tags.rating)}
+                            value={parseFloat(product.tags.Rating)}
                         />
                         <p className="text-sm text-palette-mute rtl:mr-2 ltr:ml-2 pl-1 ">
-                            {parseFloat(product.tags.rating)} {t.stars}
+                            {parseFloat(product.tags.Rating)} {t.stars}
                         </p>
                     </div>
 
