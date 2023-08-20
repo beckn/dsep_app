@@ -124,6 +124,7 @@ const CartItem: React.FC<Props> = ({
                     <p style={{ marginRight: '10px' }}>{t.totalAmount}</p>
                     <ProductPrice
                         price={parseFloat(product.price.value) * counter!}
+                        isLargeSize
                     />
                 </div>
             </div>

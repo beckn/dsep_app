@@ -67,8 +67,8 @@ const OrderConfirmation = () => {
   }, []);
 
   if (confirmRequest.loading) {
-    return <Loader loadingText={t.confirmingOrderLoader} />;
-  }
+    return <Loader loadingText={t.categoryLoadPrimary} subLoadingText={t.confirmingOrderLoader} />
+}
     const handleViewCource = () => {
         if (confirmRequest.data) {
            localStorage.setItem("confirmData", JSON.stringify(confirmRequest.data));
