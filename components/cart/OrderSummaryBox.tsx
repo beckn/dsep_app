@@ -33,7 +33,7 @@ const OrderSummaryBox: React.FC<OrderSummaryBoxPropsModel> = (props) => {
                         {t.orderSummary}
                     </h3>
                     <div
-                        className="flex-grow sticky bottom-2 left-0 right-0 md:top-36 shadow-lg rounded-lg py-4 xl:py-12 px-4 xl:px-8 -mx-[1rem] md:mx-4 xl:mx-8  w-[100%] md:w-auto  md:min-w-[300px] md:max-w-[400px]"
+                        className="flex-grow  bottom-2 left-0 right-0 md:top-36 shadow-lg rounded-lg py-4 xl:py-12 px-4 xl:px-8 -mx-[1rem] md:mx-4 xl:mx-8  w-[100%] md:w-auto  md:min-w-[300px] md:max-w-[400px]"
                         style={{
                             margin: '20px 0 40px auto',
                             zIndex: '9',
@@ -55,7 +55,13 @@ const OrderSummaryBox: React.FC<OrderSummaryBoxPropsModel> = (props) => {
                                 <p className="text-md sm:text-base md:text-palette-base tracking-wide">
                                     {t.subtotalText}
                                 </p>
-                                <ProductPrice price={totalAmount} customStyleObject={{fontWeight: 400, color: "black"}} />
+                                <ProductPrice
+                                    price={totalAmount}
+                                    customStyleObject={{
+                                        fontWeight: 400,
+                                        color: 'black',
+                                    }}
+                                />
                             </div>
                             <Divider my={'10px'} />
                             <div className=" my-1 flex flex-wrap items-baseline justify-between flex-grow md:my-4">
