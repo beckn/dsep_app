@@ -91,12 +91,18 @@ const CartItem: React.FC<Props> = ({
                 {/* <Link
           href={`/${product.category[0]}/${product.category[1]}/${product.category[2]}/${product.slug.current}`}
         > */}
-                <a className="flex flex-wrap sm:flex-nowrap justify-center items-center flex-grow">
+                <a
+                    className="flex flex-wrap sm:flex-nowrap justify-center items-center flex-grow"
+                    style={{
+                        position: 'relative',
+                    }}
+                >
                     <div
                         style={{
                             width: '107px',
                             height: '107px',
                             marginBottom: '5px',
+                            position: 'relative',
                         }}
                     >
                         <Image
@@ -107,6 +113,34 @@ const CartItem: React.FC<Props> = ({
                             className="object-contain"
                         />
                     </div>
+                    {counter === 1 ? (
+                        <div
+                            onClick={() => decrement(product.id)}
+                            className="p-1"
+                            style={{
+                                position: 'absolute',
+                                top: '0',
+                                right: '0',
+                            }}
+                        >
+                            <HiOutlineTrash
+                                style={{ fontSize: '1.3rem', color: 'black' }}
+                            />
+                        </div>
+                    ) : (
+                        <div
+                            onClick={() => decrement(product.id)}
+                            className="p-1"
+                            style={{
+                                position: 'absolute',
+                                top: '0',
+                                right: '0',
+                            }}
+                        >
+                            <HiMinusSm style={{ fontSize: '1rem' }} />
+                        </div>
+                    )}
+
                     <div
                         className="flex-grow text-sm font-normal mb-2 sm:mb-0 mx-2 w-full text-center pt-1"
                         style={{ direction: 'ltr', fontSize: '17px' }}
@@ -122,6 +156,7 @@ const CartItem: React.FC<Props> = ({
                     style={{ fontSize: '15px' }}
                 >
                     <p style={{ marginRight: '10px' }}>{t.totalAmount}</p>
+
                     <ProductPrice
                         price={parseFloat(product.price.value) * counter!}
                         isLargeSize
