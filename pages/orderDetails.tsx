@@ -3,18 +3,13 @@ import {
     CardBody,
     Divider,
     Flex,
-    Stack,
     Text,
     Image,
-    StackDivider,
     Card,
     useDisclosure,
 } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import Accordion from '../components/accordion/Accordion'
-import CallphoneIcon from '../public/images/CallphoneIcon.svg'
-import locationIcon from '../public/images/locationIcon.svg'
-import nameIcon from '../public/images/nameIcon.svg'
 import { useLanguage } from '../hooks/useLanguage'
 import { ResponseModel } from '../lib/types/responseModel'
 import {
@@ -23,23 +18,15 @@ import {
     getPayloadForStatusRequest,
     getPayloadForTrackRequest,
 } from '../utilities/confirm-utils'
-import {
-    generateAlphanumericID,
-    getDataPerBpp,
-    storeOrderDetails,
-} from '../utilities/orderDetails-utils'
+import { getDataPerBpp } from '../utilities/orderDetails-utils'
 import { getSubTotalAndDeliveryChargesForOrder } from '../utilities/orderHistory-utils'
-import lineBlack from '../public/images/lineBlack.svg'
 import TrackIcon from '../public/images/TrackIcon.svg'
 import ViewMoreOrderModal from '../components/orderDetails/ViewMoreOrderModal'
 import { useSelector } from 'react-redux'
 import { TransactionIdRootState } from '../lib/types/cart'
 import useRequest from '../hooks/useRequest'
-import {
-    orderCardStatusMap,
-    RenderOrderStatusList,
-} from '../components/orderDetails/RenderOrderStatusTree'
 import { useRouter } from 'next/router'
+import DetailsCard from '../components/detailsCard/DetailsCard'
 
 const OrderDetails = () => {
     const [allOrderDelivered, setAllOrderDelivered] = useState(false)
@@ -304,16 +291,29 @@ const OrderDetails = () => {
             </Accordion>
 
             {statusResponse.map((res: any, index: number) => (
-                <Accordion
-                    key={index}
-                    accordionHeader={
+                <div key={index}>
+                    <ViewMoreOrderModal
+                        isOpen={isOpen}
+                        onOpen={onOpen}
+                        onClose={onClose}
+                        items={res.message.order.items}
+                        orderId={res.message.order.displayId}
+                    />
+                    <Divider mb={'20px'} />
+                    <DetailsCard>
                         <Box>
                             <Flex
                                 mb={'15px'}
                                 fontSize={'17px'}
                                 alignItems={'center'}
                             >
-                                <Text pr={'8px'}>{t.orderId}:</Text>
+                                <Text
+                                    fontWeight={600}
+                                    fontSize={'17px'}
+                                    pr={'8px'}
+                                >
+                                    {t.orderId}:
+                                </Text>
 
                                 <Text
                                     textOverflow={'ellipsis'}
@@ -350,43 +350,11 @@ const OrderDetails = () => {
                                         +{totalQuantityOfOrder(res) - 1}
                                     </Text>
                                 </Flex>
-
-                                <Text
-                                    fontSize={'15px'}
-                                    fontWeight={'600'}
-                                    color={
-                                        res.message.order.state === 'INITIATED'
-                                            ? 'rgba(var(--pending-status-color))'
-                                            : 'rgba(var(--delivered-status-color))'
-                                    }
-                                >
-                                    {
-                                        t[
-                                            `${
-                                                orderCardStatusMap[
-                                                    res.message.order.state
-                                                ]
-                                            }`
-                                        ]
-                                    }
-                                </Text>
                             </Flex>
                         </Box>
-                    }
-                >
-                    <ViewMoreOrderModal
-                        isOpen={isOpen}
-                        onOpen={onOpen}
-                        onClose={onClose}
-                        items={res.message.order.items}
-                        orderId={res.message.order.displayId}
-                    />
-                    <Divider mb={'20px'} />
-                    <CardBody pt={'unset'}>
-                        {RenderOrderStatusList(res)}
-                    </CardBody>
-                </Accordion>
-            ))}       
+                    </DetailsCard>
+                </div>
+            ))}
             <Accordion accordionHeader={t.paymentText}>
                 <CardBody
                     pt={'unset'}
@@ -402,7 +370,18 @@ const OrderDetails = () => {
                             {t.currencySymbol}
                             {subTotal}
                         </Text>
-                    </Flex>       
+                    </Flex>
+                    <Flex
+                        pb={'15px'}
+                        justifyContent={'space-between'}
+                        alignItems={'center'}
+                    >
+                        <Text>{t.discountApplied}</Text>
+                        <Text>
+                            - {t.currencySymbol}
+                            {subTotal}
+                        </Text>
+                    </Flex>
                     <Divider />
                 </CardBody>
                 <CardBody
@@ -417,10 +396,7 @@ const OrderDetails = () => {
                         fontWeight={'600'}
                     >
                         <Text>{t.total}</Text>
-                        <Text>
-                            {t.currencySymbol}
-                            {subTotal + totalDeliveryCharge}
-                        </Text>
+                        <Text>{t.currencySymbol}0.00</Text>
                     </Flex>
                     <Flex
                         fontSize={'15px'}
@@ -429,7 +405,7 @@ const OrderDetails = () => {
                         pb={'15px'}
                     >
                         <Text>{t.paymentMethod}</Text>
-                        <Text>{t.cashOnDelivery}</Text>
+                        <Text>{t.naText}</Text>
                     </Flex>
                 </CardBody>
             </Accordion>

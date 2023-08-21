@@ -35,8 +35,19 @@ const LandingPage: React.FC = () => {
                             event.key === 'Enter' && navigateToSearchResults()
                         }
                     />
-                    <button className={Styles.search_button}>
-                        <FaSearch onClick={() => navigateToSearchResults()} />
+                    <button
+                        disabled={true}
+                        className={Styles.search_button}
+                    >
+                        <FaSearch
+                            aria-disabled={true}
+                            onClick={(e) => {
+                                if(searchTerm) {
+                                  navigateToSearchResults()
+                                }
+                               e.preventDefault()
+                            }}
+                        />
                     </button>
                 </Box>
                 <Flex className={Styles.footer_container}>

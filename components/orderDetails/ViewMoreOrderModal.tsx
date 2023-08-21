@@ -71,13 +71,6 @@ const ViewMoreOrderModal: React.FC<ViewMoreOrderModalProps> = (props) => {
                                 >
                                     <Box>
                                         <Text>{item.descriptor.name}</Text>
-                                        <Text
-                                            fontSize={'12px'}
-                                            fontWeight={'600'}
-                                            pt={'5px'}
-                                        >
-                                            x {item.quantity.count}
-                                        </Text>
                                     </Box>
                                     <Text
                                         fontSize={'15px'}

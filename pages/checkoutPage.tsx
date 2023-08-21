@@ -38,11 +38,11 @@ export type ShippingFormData = {
 
 const CheckoutPage = () => {
     const [formData, setFormData] = useState<ShippingFormData>({
-        name: 'Antoine Dubois',
-        mobileNumber: '0612345678',
-        email: 'antoine.dubois@gmail.com',
-        address: '15 Rue du Soleil, Paris, France',
-        zipCode: '75001',
+        name: 'Aanya Verma',
+        mobileNumber: '9876543210',
+        email: 'aanya.verma@gmail.com',
+        address: '151-E, Janpath Road, New Delhi',
+        zipCode: '11000',
     })
 
     const [
@@ -312,17 +312,12 @@ const CheckoutPage = () => {
                                     .subTotal
                             }`}
                             deliveryChargesText={t.discountApplied}
-                            deliveryChargesValue={`${t.currencySymbol} ${
+                            deliveryChargesValue={`- ${t.currencySymbol} ${
                                 getSubTotalAndDeliveryCharges(initRequest.data)
-                                    .totalDeliveryCharge
+                                    .subTotal
                             }`}
                             totalText={t.totalText}
-                            totalValue={`${
-                                getSubTotalAndDeliveryCharges(initRequest.data)
-                                    .subTotal +
-                                getSubTotalAndDeliveryCharges(initRequest.data)
-                                    .totalDeliveryCharge
-                            }`}
+                            totalValue={'0.00'}
                         />
                     </DetailsCard>
                 </Box>
