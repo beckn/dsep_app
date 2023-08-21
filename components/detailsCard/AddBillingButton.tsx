@@ -20,7 +20,12 @@ const AddBillingButton: React.FC<AddBillingButtonProps> = (props) => {
                 alignItems={'center'}
                 onClick={onOpen}
             >
-                {props.imgFlag ? <Image src={addShippingBtn} /> : null}
+                {props.imgFlag ? (
+                    <Image
+                        alt="addShippingBtnImg"
+                        src={addShippingBtn}
+                    />
+                ) : null}
                 <Text
                     fontSize={'15px'}
                     color={'rgba(var(--color-primary))'}

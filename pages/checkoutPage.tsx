@@ -213,7 +213,7 @@ const CheckoutPage = () => {
                             <>
                                 <ItemDetails
                                     title={item.descriptor.name}
-                                    provider={(item as any).bppName }
+                                    provider={(item as any).bppName}
                                     quantity={item.quantity}
                                     price={item.totalPrice}
                                 />
@@ -281,7 +281,10 @@ const CheckoutPage = () => {
                 </Flex>
                 <DetailsCard>
                     <Flex alignItems={'center'}>
-                        <Image src={addShippingBtn} />{' '}
+                        <Image
+                            alt="shippingBtnImage"
+                            src={addShippingBtn}
+                        />{' '}
                         <Text ml={'8px'}>
                             <span style={{ fontWeight: 'bold' }}>
                                 ‘FirstLearn5k’

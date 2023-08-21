@@ -14,8 +14,8 @@ import { useRouter } from 'next/router'
 
 const Search = () => {
     const [items, setItems] = useState([])
-    const router = useRouter();
-    const searchKeyword = router.query?.searchTerm || '';
+    const router = useRouter()
+    const searchKeyword = router.query?.searchTerm || ''
     const dispatch = useDispatch()
     const [providerId, setProviderId] = useState('')
     const { t, locale } = useLanguage()
@@ -33,7 +33,7 @@ const Search = () => {
     useEffect(() => {
         if (!!searchKeyword) {
             localStorage.removeItem('searchItems')
-            fetchDataForSearch();
+            fetchDataForSearch()
         }
         if (localStorage) {
             const stringifiedOptiontags = localStorage.getItem('optionTags')
@@ -47,7 +47,8 @@ const Search = () => {
                 setTagValue(JSON.parse(stringifiedSelectedOption).tagValue)
             }
         }
-    }, [])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [searchKeyword])
 
     const searchPayload = {
         context: {
