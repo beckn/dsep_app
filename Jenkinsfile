@@ -1,24 +1,38 @@
 pipeline {
   agent any
+  tools {
+    nodejs 'nodejs14'
+  }
   stages {
-    stage('Executing Shell Script On Server') {
+    stage('Checkout') {
       steps {
-        script {
-          sshagent(credentials: ['"${credentials}"']) {
-            sh '''
-              ssh -t -t ${userName}@${hostIP} -o StrictHostKeyChecking=no << EOF
-              ${listOfCommands}
-              logout
-              EOF
-              '''
-          }
-        }
+        sh 'git clone ${GIT_REPO}'
+      }
+    }
+    stage('Build') {
+      steps {
+        sh ''' 
+        cd beckn-exp-guide-ui
+        git checkout "${GIT_BRANCH}"
+        rm package-lock.json
+        npm install
+        CI=false npm run-script build 
+        '''          
+      }
+    }
+    stage('Deploy') {
+      steps {
+        sh '''
+        cd beckn-exp-guide-ui
+        aws s3 cp --recursive build/ "${S3_BUCKET}"
+        aws cloudfront create-invalidation --distribution-id "${DISTRIBUTION_ID}" --paths "/*"
+        '''
       }
     }
   }
   post {
     always {
-        cleanWs(cleanWhenNotBuilt: false,
+        cleanWs(cleanWhenNotBuilt: true,
             deleteDirs: true,
             disableDeferredWipeout: true,
             notFailBuild: true,
