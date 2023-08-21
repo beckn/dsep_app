@@ -1,18 +1,21 @@
 pipeline {
   agent any
   tools {
-    nodejs 'nodejs14'
+    nodejs 'nodejs19'
   }
   stages {
     stage('Checkout') {
       steps {
-        sh 'git clone ${GIT_REPO}'
+        sh '''
+        #echo $GIT_URL
+        git clone $GIT_URL
+        '''
       }
     }
     stage('Build') {
       steps {
-        sh ''' 
-        cd beckn-exp-guide-ui
+        sh '''
+        pwd
         git checkout "${GIT_BRANCH}"
         rm package-lock.json
         npm install
