@@ -1,5 +1,7 @@
 pipeline {
-  agent 'jenkins-android-build-ubuntu'
+  agent { 
+      label "jenkins-android-build-ubuntu"
+  }
   tools {
     nodejs 'nodejs19'
   }
@@ -15,19 +17,22 @@ pipeline {
     stage('Build') {
       steps {
         sh '''
-        pwd
+        repoName=$(echo "$GIT_URL" | awk -F "/" '{print $2}' | sed "s/\\.git$//")
+        cd ${repoName}
         git checkout "${GIT_BRANCH}"
         rm package-lock.json
-        npm install
-        CI=false npm run-script build 
+        CI=false npm install -f
+        CI=false npm run build
+        CI=false npm run export
         '''          
       }
     }
     stage('Deploy') {
       steps {
         sh '''
-        cd beckn-exp-guide-ui
-        aws s3 cp --recursive build/ "${S3_BUCKET}"
+        repoName=$(echo "$GIT_URL" | awk -F "/" '{print $2}' | sed "s/\\.git$//")
+        cd ${repoName}
+        aws s3 cp --recursive ./out/ "${S3_BUCKET}"
         aws cloudfront create-invalidation --distribution-id "${DISTRIBUTION_ID}" --paths "/*"
         '''
       }
@@ -35,12 +40,7 @@ pipeline {
   }
   post {
     always {
-        cleanWs(cleanWhenNotBuilt: true,
-            deleteDirs: true,
-            disableDeferredWipeout: true,
-            notFailBuild: true,
-            patterns: [[pattern: '.gitignore', type: 'INCLUDE'],
-            [pattern: '.propsfile', type: 'EXCLUDE']])
+        cleanWs()
         }
     }
 }
