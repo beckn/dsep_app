@@ -1,5 +1,5 @@
 pipeline {
-  agent any
+  agent 'jenkins-android-build-ubuntu'
   tools {
     nodejs 'nodejs19'
   }
