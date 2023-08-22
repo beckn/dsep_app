@@ -268,13 +268,7 @@ const OrderDetails = () => {
                                         as={'span'}
                                         pr={'2px'}
                                     >
-                                        {
-                                            statusResponse.filter(
-                                                (res: any) =>
-                                                    res.message.order.state ===
-                                                    'DELIVERED'
-                                            ).length
-                                        }
+                                        {confirmData.length}
                                     </Text>
                                     <Text as={'span'}>of</Text>
                                     <Text
