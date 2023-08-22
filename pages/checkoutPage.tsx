@@ -312,10 +312,8 @@ const CheckoutPage = () => {
                                     .subTotal
                             }`}
                             deliveryChargesText={t.discountApplied}
-                            deliveryChargesValue={`- ${t.currencySymbol} ${
-                                getSubTotalAndDeliveryCharges(initRequest.data)
-                                    .subTotal
-                            }`}
+                            deliveryChargesValue={`- ${t.currencySymbol} ${getSubTotalAndDeliveryCharges(initRequest.data)
+                                .subTotal}`}
                             totalText={t.totalText}
                             totalValue={'0.00'}
                         />

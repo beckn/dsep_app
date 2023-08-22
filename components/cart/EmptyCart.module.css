@@ -1,8 +1,7 @@
 .emptyCart_container {
-  padding-left: 34px;
   padding-top: 87px;
-  padding-right: 34px;
   flex-direction: column;
+  width: 100%;
 }
 .cartHeadingText {
   color: #000;

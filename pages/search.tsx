@@ -15,7 +15,7 @@ import { useRouter } from 'next/router'
 const Search = () => {
     const [items, setItems] = useState([])
     const router = useRouter()
-    const searchKeyword = router.query?.searchTerm || ''
+    const [searchKeyword, setSearchKeyword] = useState(router.query?.searchTerm || '');
     const dispatch = useDispatch()
     const [providerId, setProviderId] = useState('')
     const { t, locale } = useLanguage()
@@ -33,6 +33,8 @@ const Search = () => {
     useEffect(() => {
         if (!!searchKeyword) {
             localStorage.removeItem('searchItems')
+            localStorage.setItem('optionTags', JSON.stringify({ name: searchKeyword }));
+            window.dispatchEvent(new Event("storage-optiontags"));
             fetchDataForSearch()
         }
         if (localStorage) {
@@ -140,7 +142,10 @@ const Search = () => {
                 <SearchBar
                     searchString={searchKeyword}
                     handleChange={(text: string) => {
-                        localStorage.removeItem('searchItems')
+                        setSearchKeyword(text)
+                        localStorage.removeItem('optionTags');
+                        localStorage.setItem('optionTags', JSON.stringify({ name: text }));
+                        window.dispatchEvent(new Event("storage-optiontags"));
                         fetchDataForSearch()
                     }}
                 />

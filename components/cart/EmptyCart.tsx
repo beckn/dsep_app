@@ -15,7 +15,7 @@ const { t } = useLanguage();
 
   return (
     <Flex className={Styles.emptyCart_container}>
-          <Box mb={"40px"}>
+          <Box mb={"40px"} display={"flex"} justifyContent={"center"} >
               <Image src={CartEmpty} width={"306px"} height={"245px"} alt='cartEmpty'/>
           </Box>  
           <Text className={Styles.cartHeadingText}>{t.cartEmpty}</Text>

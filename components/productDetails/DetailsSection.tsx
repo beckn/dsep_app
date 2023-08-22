@@ -12,7 +12,13 @@ interface Props {
 }
 const DetailsSection: React.FC<Props> = ({ product }) => {
     const { t } = useLanguage()
-    const [showComponent, setShowComponent] = useState(false)
+    const [showComponent, setShowComponent] = useState(false);
+
+    useEffect(()=>{
+        localStorage.removeItem('optionTags');
+        localStorage.setItem('optionTags',JSON.stringify({name: product.descriptor.name}));
+        window.dispatchEvent(new Event("storage-optiontags"));
+    },[product])
 
     useEffect(() => {
         setShowComponent(true)
