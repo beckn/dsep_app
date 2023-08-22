@@ -182,7 +182,10 @@ const BottomHeader = () => {
     const { t, locale } = useLanguage()
 
     useEffect(() => {
-        setOptionTags(JSON.parse(localStorage.getItem('optionTags') as string))
+        setOptionTags(JSON.parse(localStorage.getItem('optionTags') as string));
+        window.addEventListener('storage-optiontags', () => {
+            setOptionTags(JSON.parse(localStorage.getItem('optionTags') as string));
+        })
     }, [])
 
     const router = useRouter()
