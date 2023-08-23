@@ -33,7 +33,7 @@ export type ShippingFormData = {
     mobileNumber: string
     email: string
     address: string
-    zipCode: string
+    pinCode: string
 }
 
 const CheckoutPage = () => {
@@ -42,7 +42,7 @@ const CheckoutPage = () => {
         mobileNumber: '9876543210',
         email: 'aanya.verma@gmail.com',
         address: '151-E, Janpath Road, New Delhi',
-        zipCode: '11000',
+        pinCode: '201016',
     })
 
     const [
@@ -55,7 +55,7 @@ const CheckoutPage = () => {
         mobileNumber: '0612345678',
         email: 'antoine.dubois@gmail.com',
         address: '15 Rue du Soleil, Paris, France',
-        zipCode: '75001',
+        pinCode: '75001',
     })
 
     const router = useRouter()

@@ -44,7 +44,7 @@ export const getPayloadForInitRequest = (
                             city: customerAddress.address,
                             state: customerAddress.address,
                             country: 'IND',
-                            area_code: customerAddress.zipCode,
+                            area_code: customerAddress.pinCode,
                         },
                         email: 'testemail1@mailinator.com',
                     },

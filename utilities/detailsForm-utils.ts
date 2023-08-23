@@ -5,7 +5,7 @@ export interface FormErrors {
   mobileNumber?: string;
   email?: string;
   address?: string;
-  zipCode?: string;
+  pinCode?: string;
 }
 
 export const validateForm = (formData: ShippingFormData): FormErrors => {
@@ -31,10 +31,10 @@ export const validateForm = (formData: ShippingFormData): FormErrors => {
     errors.address = "errorAddress";
   }
 
-  if (formData.zipCode.trim() === "") {
-    errors.zipCode = "errorZipcode";
-  } else if (!/^\d{6}$/.test(formData.zipCode)) {
-    errors.zipCode = "errorZipcode2";
+  if (formData.pinCode.trim() === "") {
+    errors.pinCode = "errorZipcode";
+  } else if (!/^\d{6}$/.test(formData.pinCode)) {
+    errors.pinCode = "errorZipcode2";
   }
 
   return errors;
