@@ -36,11 +36,9 @@ const LandingPage: React.FC = () => {
                         }
                     />
                     <button
-                        disabled={true}
                         className={Styles.search_button}
                     >
                         <FaSearch
-                            aria-disabled={true}
                             onClick={(e) => {
                                 if(searchTerm) {
                                   navigateToSearchResults()

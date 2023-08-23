@@ -59,7 +59,7 @@ const Search = () => {
         message: {
             criteria: {
                 dropLocation: '48.85041854,2.343660801',
-                categoryName: 'Courses',
+                categoryName: `${searchKeyword}`,
             },
         },
     }

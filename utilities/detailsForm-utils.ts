@@ -33,7 +33,7 @@ export const validateForm = (formData: ShippingFormData): FormErrors => {
 
   if (formData.zipCode.trim() === "") {
     errors.zipCode = "errorZipcode";
-  } else if (!/^\d{5}$/.test(formData.zipCode)) {
+  } else if (!/^\d{6}$/.test(formData.zipCode)) {
     errors.zipCode = "errorZipcode2";
   }
 
