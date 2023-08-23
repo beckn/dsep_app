@@ -19,6 +19,7 @@ import {
     getItemsForCart,
     getPayloadForQuoteRequest,
 } from '../utilities/cart-utils'
+import EmptyCart from '../components/cart/EmptyCart'
 
 const Cart = () => {
     const [itemsForCart, setItemsForCart] = useState<CartRetailItem[]>([])
@@ -87,8 +88,8 @@ const Cart = () => {
         return <Loader loadingText={t.quoteRequestLoader} />
     }
 
-    if (!itemsForCart.length) {
-        return <></>
+    if (!cartItems.length) {
+        return <EmptyCart />
     }
 
     return (
