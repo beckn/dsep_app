@@ -15,7 +15,9 @@ import { useRouter } from 'next/router'
 const Search = () => {
     const [items, setItems] = useState([])
     const router = useRouter()
-    const [searchKeyword, setSearchKeyword] = useState(router.query?.searchTerm || '');
+    const [searchKeyword, setSearchKeyword] = useState(
+        router.query?.searchTerm || ''
+    )
     const dispatch = useDispatch()
     const [providerId, setProviderId] = useState('')
     const { t, locale } = useLanguage()
@@ -33,8 +35,11 @@ const Search = () => {
     useEffect(() => {
         if (!!searchKeyword) {
             localStorage.removeItem('searchItems')
-            localStorage.setItem('optionTags', JSON.stringify({ name: searchKeyword }));
-            window.dispatchEvent(new Event("storage-optiontags"));
+            localStorage.setItem(
+                'optionTags',
+                JSON.stringify({ name: searchKeyword })
+            )
+            window.dispatchEvent(new Event('storage-optiontags'))
             fetchDataForSearch()
         }
         if (localStorage) {
@@ -58,8 +63,9 @@ const Search = () => {
         },
         message: {
             criteria: {
-                dropLocation: '48.85041854,2.343660801',
-                categoryName: `${searchKeyword}`,
+                dropLocation: '12.9715987,77.5945627',
+                categoryName: 'Courses',
+                searchString: searchKeyword,
             },
         },
     }
@@ -143,9 +149,12 @@ const Search = () => {
                     searchString={searchKeyword}
                     handleChange={(text: string) => {
                         setSearchKeyword(text)
-                        localStorage.removeItem('optionTags');
-                        localStorage.setItem('optionTags', JSON.stringify({ name: text }));
-                        window.dispatchEvent(new Event("storage-optiontags"));
+                        localStorage.removeItem('optionTags')
+                        localStorage.setItem(
+                            'optionTags',
+                            JSON.stringify({ name: text })
+                        )
+                        window.dispatchEvent(new Event('storage-optiontags'))
                         fetchDataForSearch()
                     }}
                 />

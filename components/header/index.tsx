@@ -38,7 +38,7 @@ const storeHeaderBlackList = [
 ]
 const headerValues = {
     '/checkoutPage': 'Billing & Shipping',
-    '/orderHistory': 'Order History',
+    '/orderHistory': 'My Courses',
     '/orderDetails': 'Order Details',
     '/': 'Sign In',
     '/mobileOtp': 'Sign In',
@@ -182,9 +182,11 @@ const BottomHeader = () => {
     const { t, locale } = useLanguage()
 
     useEffect(() => {
-        setOptionTags(JSON.parse(localStorage.getItem('optionTags') as string));
+        setOptionTags(JSON.parse(localStorage.getItem('optionTags') as string))
         window.addEventListener('storage-optiontags', () => {
-            setOptionTags(JSON.parse(localStorage.getItem('optionTags') as string));
+            setOptionTags(
+                JSON.parse(localStorage.getItem('optionTags') as string)
+            )
         })
     }, [])
 
