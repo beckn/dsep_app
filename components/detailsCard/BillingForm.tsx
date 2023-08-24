@@ -28,7 +28,8 @@ export interface ShippingFormProps {
   billingFormData: ShippingFormData;
   formSubmitHandler: Function;
 }
-
+const nameRegex = /^[A-Za-z\s]*$/;
+const mobNumberRegex = /^\d*$/;
 const BillingForm: React.FC<ShippingFormProps> = (props) => {
   const dispatch = useDispatch();
   const [formErrors, setFormErrors] = useState<FormErrors>({});
@@ -37,10 +38,10 @@ const BillingForm: React.FC<ShippingFormProps> = (props) => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    if (name === "name" && !/^[A-Za-z\s]*$/.test(value)) {
+    if (name === "name" && !nameRegex.test(value)) {
       return;
     }
-    if (name === "mobileNumber" && !/^\d*$/.test(value)) {
+    if (name === "mobileNumber" && !mobNumberRegex .test(value)) {
       return;
     }
     props.setBillingFormData((prevFormData: ShippingFormData) => ({
@@ -137,9 +138,13 @@ const BillingForm: React.FC<ShippingFormProps> = (props) => {
                   value={props.billingFormData.mobileNumber}
                   onChange={handleInputChange}
                 />
-                <label className={style.did_floating_label}>{t.formNumber}</label>
+                <label className={style.did_floating_label}>
+                  {t.formNumber}
+                </label>
                 {formErrors.mobileNumber && (
-                  <span className={style.error}>{t[`${formErrors.mobileNumber}`]}</span>
+                  <span className={style.error}>
+                    {t[`${formErrors.mobileNumber}`]}
+                  </span>
                 )}
               </div>
               <div className={style.did_floating_label_content}>
@@ -151,9 +156,13 @@ const BillingForm: React.FC<ShippingFormProps> = (props) => {
                   value={props.billingFormData.email}
                   onChange={handleInputChange}
                 />
-                <label className={style.did_floating_label}>{t.formEmail}</label>
+                <label className={style.did_floating_label}>
+                  {t.formEmail}
+                </label>
                 {formErrors.email && (
-                  <span className={style.error}>{t[`${formErrors.email}`]}</span>
+                  <span className={style.error}>
+                    {t[`${formErrors.email}`]}
+                  </span>
                 )}
               </div>
               <div className={style.did_floating_label_content}>
@@ -165,24 +174,38 @@ const BillingForm: React.FC<ShippingFormProps> = (props) => {
                   value={props.billingFormData.address}
                   onChange={handleInputChange}
                 />
-                <label className={style.did_floating_label}>{t.formAddress}</label>
+                <label className={style.did_floating_label}>
+                  {t.formAddress}
+                </label>
                 {formErrors.address && (
-                  <span className={style.error}>{t[`${formErrors.address}`]}</span>
+                  <span className={style.error}>
+                    {t[`${formErrors.address}`]}
+                  </span>
                 )}
               </div>
 
               <div className={style.did_floating_label_content}>
                 <input
                   className={style.did_floating_input}
-                  type="number"
+                  type="text"
                   placeholder=" "
                   name="pinCode"
                   value={props.billingFormData.pinCode}
-                  onChange={handleInputChange}
+                  onChange={(e) => {
+                    e.currentTarget.value = e.currentTarget.value.replace(
+                      /[^0-9]/g,
+                      ""
+                    );
+                    handleInputChange(e);
+                  }}
                 />
-                <label className={style.did_floating_label}>{t.formZipCode}</label>
+                <label className={style.did_floating_label}>
+                  {t.formZipCode}
+                </label>
                 {formErrors.pinCode && (
-                  <span className={style.error}>{t[`${formErrors.pinCode}`]}</span>
+                  <span className={style.error}>
+                    {t[`${formErrors.pinCode}`]}
+                  </span>
                 )}
               </div>
             </div>

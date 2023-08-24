@@ -85,27 +85,6 @@ const Card: React.FC<Props> = ({ product }) => {
                                 )
                             ) : null}
                         </Flex>
-
-                        {!product.tags.foodType ? (
-                            <Flex
-                                fontSize={'12px'}
-                                alignItems={'center'}
-                                mb={'8px'}
-                            >
-                                <Text fontWeight={'600'}>Author:</Text>
-
-                                <Text
-                                    pl={'3px'}
-                                    noOfLines={1}
-                                    textOverflow="ellipsis"
-                                    whiteSpace="pre-wrap"
-                                    overflowWrap="break-word"
-                                >
-                                    {product.tags.authorName}
-                                </Text>
-                            </Flex>
-                        ) : null}
-
                         <Flex
                             fontSize={'12px'}
                             alignItems={'center'}
