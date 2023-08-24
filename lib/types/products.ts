@@ -87,4 +87,5 @@ export interface RetailItem {
     Rating:string;
     foodType?:string
   };
+  bppName?:string
 }
