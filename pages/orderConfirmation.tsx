@@ -98,7 +98,7 @@ const OrderConfirmation = () => {
       </Stack>
       <VStack>
         <Button
-          buttonText={t.viewCourseBtn}
+          buttonText={t.startCourse}
           background={"rgba(var(--color-primary))"}
           color={"rgba(var(--text-color))"}
           isDisabled={false}
