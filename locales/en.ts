@@ -378,5 +378,6 @@ const en: { [key: string]: string } = {
     goBackBtn: 'Go back home',
     viewCourseBtn: 'View Course Details',
     naText: 'NA',
+    startCourse:"Start Course"
 }
 export default en

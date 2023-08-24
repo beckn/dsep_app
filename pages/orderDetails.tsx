@@ -414,7 +414,7 @@ const OrderDetails = () => {
             </Accordion>
             <Box mt={'40px'}>
                 <Button
-                    buttonText={t.viewCourseBtn}
+                    buttonText={t.startCourse}
                     background={'rgba(var(--color-primary))'}
                     color={'rgba(var(--text-color))'}
                     isDisabled={false}
