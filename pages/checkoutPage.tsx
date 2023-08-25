@@ -38,9 +38,9 @@ export type ShippingFormData = {
 
 const CheckoutPage = () => {
     const [formData, setFormData] = useState<ShippingFormData>({
-        name: 'Aanya Verma',
+        name: 'Santosh Kumar',
         mobileNumber: '9876543210',
-        email: 'aanya.verma@gmail.com',
+        email: 'santosh.k@gmail.com',
         address: '151-E, Janpath Road, New Delhi',
         pinCode: '201016',
     })
@@ -51,11 +51,11 @@ const CheckoutPage = () => {
     ] = useState(true)
 
     const [billingFormData, setBillingFormData] = useState<ShippingFormData>({
-        name: 'Antoine Dubois',
-        mobileNumber: '0612345678',
-        email: 'antoine.dubois@gmail.com',
-        address: '15 Rue du Soleil, Paris, France',
-        pinCode: '75001',
+        name: 'Santosh Kumar',
+        mobileNumber: '9876543210',
+        email: 'santosh.k@gmail.com',
+        address: '151-E, Janpath Road, New Delhi',
+        pinCode: '201016',
     })
 
     const router = useRouter()
