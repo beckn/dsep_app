@@ -58,6 +58,7 @@ const OrderHistory = () => {
     }
 
     return orderHistoryList.map((orderInHistory: any, index: number) => {
+        console.log('orderHistory in the app', orderInHistory)
         const createdAt = getOrderPlacementTimeline(
             orderInHistory.orders.length > 0
                 ? orderInHistory.orders[0].message.responses[0].message.order
@@ -73,6 +74,10 @@ const OrderHistory = () => {
         )
         const orderState =
             orderInHistory.orders[0].message.responses[0].message.order.state
+
+        const orderedItemName =
+            orderInHistory.orders[0].message.responses[0].message.order.items[0]
+                .descriptor.name
 
         return (
             <Link
@@ -90,6 +95,7 @@ const OrderHistory = () => {
                             quantity={totalQuantityOfSingleOrder}
                             totalAmount={totalPriceOfSingleOrder}
                             orderState={t[`${orderStatusMap[orderState]}`]}
+                            orderedItemName={orderedItemName}
                         />
                     </DetailsCard>
                 </Box>

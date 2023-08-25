@@ -173,13 +173,13 @@ const ShippingForm: React.FC<ShippingFormProps> = (props) => {
                   className={style.did_floating_input}
                   type="text"
                   placeholder=" "
-                  name="zipCode"
-                  value={props.formData.zipCode}
+                  name="pinCode"
+                  value={props.formData.pinCode}
                   onChange={handleInputChange}
                 />
                 <label className={style.did_floating_label}>{t.formZipCode}</label>
-                {formErrors.zipCode && (
-                  <span className={style.error}>{t[`${formErrors.zipCode}`]}</span>
+                {formErrors.pinCode && (
+                  <span className={style.error}>{t[`${formErrors.pinCode}`]}</span>
                 )}
               </div>
             </div>

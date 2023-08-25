@@ -2,7 +2,11 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { useLanguage } from '../../hooks/useLanguage'
 import { ICartRootState } from '../../lib/types/cart'
+import Button from '../button/Button'
 import ProductPrice from '../UI/ProductPrice'
+import { Divider } from '@chakra-ui/react'
+import { Router } from 'next/router'
+import EmptyCart from './EmptyCart'
 
 interface OrderSummaryBoxPropsModel {
     onOrderClick: () => void
@@ -21,10 +25,7 @@ const OrderSummaryBox: React.FC<OrderSummaryBoxPropsModel> = (props) => {
     return (
         <>
             {totalQuantity > 0 ? (
-                <div
-                    className="flex-grow sticky bottom-2 left-0 right-0 md:top-36 shadow-lg bg-[#fcfbfe] border-2 rounded-lg py-4 xl:py-12 px-4 xl:px-8 -mx-[1rem] md:mx-4 xl:mx-8  w-[98vw] md:w-auto  md:min-w-[300px] md:max-w-[400px]"
-                    style={{ marginTop: '15px', zIndex: '9' }}
-                >
+                <>
                     <h3
                         className=" sm:text-lg md:text-xl"
                         style={{ fontSize: '17px' }}
@@ -32,36 +33,58 @@ const OrderSummaryBox: React.FC<OrderSummaryBoxPropsModel> = (props) => {
                         {t.orderSummary}
                     </h3>
                     <div
-                        className="flex flex-col my-1 sm:my-2"
-                        style={{ fontSize: '15px' }}
+                        className="flex-grow  bottom-2 left-0 right-0 md:top-36 shadow-lg rounded-lg py-4 xl:py-12 px-4 xl:px-8 -mx-[1rem] md:mx-4 xl:mx-8  w-[100%] md:w-auto  md:min-w-[300px] md:max-w-[400px]"
+                        style={{
+                            margin: '20px 0 40px auto',
+                            zIndex: '9',
+                        }}
                     >
-                        <div className="flex items-center justify-between md:my-4">
-                            <p className="text-sm sm:text-base text-palette-mute md:text-palette-base">
-                                {t.totalQuantity}
-                            </p>
-                            <p className="rtl:ml-1 ltr:mr-1 font-bold">
-                                {totalQuantity}
-                            </p>
-                        </div>
-                        <div className="flex flex-wrap items-baseline justify-between flex-grow md:my-4">
-                            <p className="text-sm sm:text-base text-palette-mute md:text-palette-base">
-                                {t.totalAmount}
-                            </p>
-                            <ProductPrice price={totalAmount} />
+                        <div
+                            className="flex flex-col my-1 sm:my-2"
+                            style={{ fontSize: '15px' }}
+                        >
+                            <div className=" my-1 flex items-center justify-between md:my-4">
+                                <p className="text-md sm:text-base md:text-palette-base tracking-wide">
+                                    {t.totalQuantity}
+                                </p>
+                                <p className="rtl:ml-1 ltr:mr-1">
+                                    {totalQuantity}
+                                </p>
+                            </div>
+                            <div className=" my-1 flex flex-wrap items-baseline justify-between flex-grow md:my-4">
+                                <p className="text-md sm:text-base md:text-palette-base tracking-wide">
+                                    {t.subtotalText}
+                                </p>
+                                <ProductPrice
+                                    price={totalAmount}
+                                    customStyleObject={{
+                                        fontWeight: 400,
+                                        color: 'black',
+                                    }}
+                                />
+                            </div>
+                            <Divider my={'10px'} />
+                            <div className=" my-1 flex flex-wrap items-baseline justify-between flex-grow md:my-4">
+                                <p className="text-md sm:text-base md:text-palette-base tracking-wide font-extrabold">
+                                    {t.totalText}
+                                </p>
+                                <ProductPrice
+                                    isLargeSize
+                                    price={totalAmount}
+                                />
+                            </div>
                         </div>
                     </div>
-                    <a
-                        style={{ marginTop: '15px' }}
-                        onClick={() => props.onOrderClick()}
-                        className="block bg-palette-primary md:mt-8 py-3 border_radius_all text-palette-side text-center shadow-lg"
-                    >
-                        {t.proceedToCheckout}
-                    </a>
-                </div>
+                    <Button
+                        buttonText={t.orderBtn}
+                        background={'rgba(var(--color-primary))'}
+                        color={'rgba(var(--text-color))'}
+                        isDisabled={false}
+                        handleOnClick={() => props.onOrderClick()}
+                    />
+                </>
             ) : (
-                <p className="text-palette-mute text-lg mx-auto mt-12">
-                    {t.cartIsEmpty}
-                </p>
+                <EmptyCart />
             )}
         </>
     )

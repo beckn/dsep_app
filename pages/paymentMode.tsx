@@ -55,7 +55,7 @@ function PaymentMode() {
                 </Text>
                 <CardWithCheckBox
                     setChecked={setChecked}
-                    paymentMethod={t.cashOnDelivery}
+                    paymentMethod={t.freeCourse}
                 />
             </Box>
             <Box

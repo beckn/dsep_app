@@ -9,6 +9,7 @@ interface OrderHistoryDetailsPropsModel {
     totalAmount: number
     quantity: number
     orderState: string
+    orderedItemName: string
 }
 
 const OrderHistoryDetails: React.FC<OrderHistoryDetailsPropsModel> = (
@@ -17,32 +18,33 @@ const OrderHistoryDetails: React.FC<OrderHistoryDetailsPropsModel> = (
     return (
         <Box>
             <Text
+                fontWeight="600"
+                pb={'5px'}
+                fontSize={'12px'}
+            >
+                <span style={{ fontWeight: '700' }}>
+                    {props.orderedItemName}
+                </span>
+            </Text>
+            <Text
                 pb={'5px'}
                 fontSize={'10px'}
             >
                 Placed at {props.createdAt}
             </Text>
+
             <Text
-                fontWeight="600"
-                pb={'5px'}
-                fontSize={'12px'}
-            >
-                Order Details Id{' '}
-                <span style={{ fontWeight: '700' }}>{props.orderId}</span>
-            </Text>
-            <Text
-                fontWeight="600"
                 pb={'5px'}
                 fontSize={'10px'}
             >
-                Order in progress
+                Order ID: {props.orderId}
             </Text>
             <Text
                 fontWeight="600"
                 pb={'5px'}
                 fontSize={'12px'}
             >
-                € {props.totalAmount}
+                ₹ {props.totalAmount}
             </Text>
             <Flex
                 fontSize={'10px'}
@@ -53,15 +55,10 @@ const OrderHistoryDetails: React.FC<OrderHistoryDetailsPropsModel> = (
                 <Flex>
                     {/* eslint-disable-next-line jsx-a11y/alt-text */}
                     <Image
-                        src={
-                            props.orderState === 'completed' ||
-                            props.orderState === 'Complété'
-                                ? completedIcon
-                                : pendingIcon
-                        }
+                        src={completedIcon}
                         paddingRight={'6px'}
                     />
-                    <Text>{props.orderState}</Text>
+                    <Text>Purchased</Text>
                 </Flex>
             </Flex>
         </Box>

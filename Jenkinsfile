@@ -1,29 +1,34 @@
 pipeline {
-  agent any
+  agent { 
+      label "jenkins-android-build-ubuntu"
+  }
+  tools {
+    nodejs 'nodejs19'
+  }
   stages {
-    stage('Executing Shell Script On Server') {
+    stage('Build') {
       steps {
-        script {
-          sshagent(credentials: ['"${credentials}"']) {
-            sh '''
-              ssh -t -t ${userName}@${hostIP} -o StrictHostKeyChecking=no << EOF
-              ${listOfCommands}
-              logout
-              EOF
-              '''
-          }
-        }
+        sh '''
+        git checkout "${GIT_BRANCH}"
+        rm package-lock.json
+        CI=false npm install -f
+        CI=false npm run build
+        CI=false npm run export
+        '''          
+      }
+    }
+    stage('Deploy') {
+      steps {
+        sh '''
+        aws s3 cp --recursive ./out/ "${S3_BUCKET}"
+        aws cloudfront create-invalidation --distribution-id "${DISTRIBUTION_ID}" --paths "/*"
+        '''
       }
     }
   }
   post {
     always {
-        cleanWs(cleanWhenNotBuilt: false,
-            deleteDirs: true,
-            disableDeferredWipeout: true,
-            notFailBuild: true,
-            patterns: [[pattern: '.gitignore', type: 'INCLUDE'],
-            [pattern: '.propsfile', type: 'EXCLUDE']])
+        cleanWs()
         }
     }
 }
