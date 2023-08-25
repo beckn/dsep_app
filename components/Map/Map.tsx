@@ -154,12 +154,4 @@ const Map: React.FC<MapProps> = ({ stores, selectedStore, coords, handleModalOpe
 
 	);
 }
-
-// React memo not working for some reason
-//TODO Needed because the map is re-rendered even if the co-ords are same causing a flickering issue on the map. Will fix this later
-export default React.memo(Map, (prevProps, nextProps) => {
-	if (prevProps.coords.lat === nextProps.coords.lat && prevProps.coords.long === nextProps.coords.long) {
-		return true;
-	}
-	return false;
-});
+export default Map;

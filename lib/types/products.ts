@@ -84,7 +84,8 @@ export interface RetailItem {
     Leh?: string;
     fulfillment_end_loc?: string;
     authorName:string;
-    rating:string;
+    Rating:string;
     foodType?:string
   };
+  bppName?:string
 }

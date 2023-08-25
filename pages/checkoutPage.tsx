@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Box, Flex, Text, Stack, Checkbox } from '@chakra-ui/react'
+import { Box, Flex, Text, Stack, Checkbox, Image } from '@chakra-ui/react'
 import DetailsCard from '../components/detailsCard/DetailsCard'
 import ItemDetails from '../components/detailsCard/ItemDetails'
 import ButtonComp from '../components/button/Button'
@@ -8,6 +8,7 @@ import { useLanguage } from '../hooks/useLanguage'
 import ShippingOrBillingDetails from '../components/detailsCard/ShippingOrBillingDetails'
 import PaymentDetails from '../components/detailsCard/PaymentDetails'
 import AddShippingButton from '../components/detailsCard/AddShippingButton'
+import addShippingBtn from '../public/images/offer.svg'
 import {
     CartItemForRequest,
     DataPerBpp,
@@ -32,16 +33,16 @@ export type ShippingFormData = {
     mobileNumber: string
     email: string
     address: string
-    zipCode: string
+    pinCode: string
 }
 
 const CheckoutPage = () => {
     const [formData, setFormData] = useState<ShippingFormData>({
-        name: 'Antoine Dubois',
-        mobileNumber: '0612345678',
-        email: 'antoine.dubois@gmail.com',
-        address: '15 Rue du Soleil, Paris, France',
-        zipCode: '75001',
+        name: 'Santosh Kumar',
+        mobileNumber: '9876543210',
+        email: 'santosh.k@gmail.com',
+        address: '151-E, Janpath Road, New Delhi',
+        pinCode: '201016',
     })
 
     const [
@@ -50,11 +51,11 @@ const CheckoutPage = () => {
     ] = useState(true)
 
     const [billingFormData, setBillingFormData] = useState<ShippingFormData>({
-        name: 'Antoine Dubois',
-        mobileNumber: '0612345678',
-        email: 'antoine.dubois@gmail.com',
-        address: '15 Rue du Soleil, Paris, France',
-        zipCode: '75001',
+        name: 'Santosh Kumar',
+        mobileNumber: '9876543210',
+        email: 'santosh.k@gmail.com',
+        address: '151-E, Janpath Road, New Delhi',
+        pinCode: '201016',
     })
 
     const router = useRouter()
@@ -212,9 +213,9 @@ const CheckoutPage = () => {
                             <>
                                 <ItemDetails
                                     title={item.descriptor.name}
-                                    description={item.descriptor.short_desc}
+                                    provider={(item as any).bppName}
                                     quantity={item.quantity}
-                                    price={`${t.currencySymbol}${item.totalPrice}`}
+                                    price={item.totalPrice}
                                 />
                             </>
                         )
@@ -230,17 +231,17 @@ const CheckoutPage = () => {
                         mt={'20px'}
                         justifyContent={'space-between'}
                     >
-                        <Text fontSize={'17px'}>{t.shipping}</Text>
+                        <Text fontSize={'17px'}>{t.billing}</Text>
                     </Flex>
                     <DetailsCard>
-                        <AddShippingButton
+                        <AddBillingButton
                             imgFlag={!initRequest.data}
-                            formData={formData}
-                            setFormData={setFormData}
-                            addShippingdetailsBtnText={
-                                t.addShippingdetailsBtnText
+                            billingFormData={formData}
+                            setBillingFormData={setFormData}
+                            addBillingdetailsBtnText={
+                                t.addBillingdetailsBtnText
                             }
-                            formSubmitHandler={formSubmitHandler}
+                            billingFormSubmitHandler={formSubmitHandler}
                         />
                     </DetailsCard>
                 </Box>
@@ -251,76 +252,11 @@ const CheckoutPage = () => {
                         mt={'20px'}
                         justifyContent={'space-between'}
                     >
-                        <Text fontSize={'17px'}>{t.shipping}</Text>
-                        <AddShippingButton
+                        <Text fontSize={'17px'}>{t.billing}</Text>
+                        <AddBillingButton
                             imgFlag={!isInitResultPresent()}
-                            formData={formData}
-                            setFormData={setFormData}
-                            addShippingdetailsBtnText={t.changeText}
-                            formSubmitHandler={formSubmitHandler}
-                        />
-                    </Flex>
-
-                    <ShippingOrBillingDetails
-                        accordionHeader={t.shipping}
-                        name={formData.name}
-                        location={formData.address}
-                        number={formData.mobileNumber}
-                    />
-                </Box>
-            )}
-            {/* end shipping detals */}
-            {/* start payment method */}
-            {isBillingAddressSameAsShippingAddress ? (
-                <Box>
-                    <Flex
-                        pb={'20px'}
-                        mt={'20px'}
-                        justifyContent={'space-between'}
-                    >
-                        <Text fontSize={'17px'}>{t.billing}</Text>
-                        <AddBillingButton
-                            billingFormData={billingFormData}
-                            setBillingFormData={setBillingFormData}
-                            addBillingdetailsBtnText={t.changeText}
-                            billingFormSubmitHandler={formSubmitHandler}
-                        />
-                        {/* TODO :- Will enable this button after demo */}
-                        {/* <Text
-            fontSize={"15px"}
-            color={"rgba(var(--color-primary))"}
-            cursor={"pointer"}
-          >
-            {t.changeText}
-          </Text> */}
-                    </Flex>
-                    <DetailsCard>
-                        <Stack
-                            spacing={5}
-                            direction="row"
-                        >
-                            <Checkbox
-                                colorScheme={'red'}
-                                pr={'12px'}
-                                fontSize={'17px'}
-                                defaultChecked
-                            >
-                                {t.orderDetailsCheckboxText}
-                            </Checkbox>
-                        </Stack>
-                    </DetailsCard>
-                </Box>
-            ) : (
-                <Box>
-                    <Flex
-                        pb={'20px'}
-                        mt={'20px'}
-                        justifyContent={'space-between'}
-                    >
-                        <Text fontSize={'17px'}>{t.billing}</Text>
-                        <AddBillingButton
-                            billingFormData={billingFormData}
-                            setBillingFormData={setBillingFormData}
+                            billingFormData={formData}
+                            setBillingFormData={setFormData}
                             addBillingdetailsBtnText={t.changeText}
                             billingFormSubmitHandler={formSubmitHandler}
                         />
@@ -328,14 +264,36 @@ const CheckoutPage = () => {
 
                     <ShippingOrBillingDetails
                         accordionHeader={t.billing}
-                        name={billingFormData.name}
-                        location={billingFormData.address}
-                        number={billingFormData.mobileNumber}
+                        name={formData.name}
+                        location={formData.address}
+                        number={formData.mobileNumber}
                     />
                 </Box>
             )}
-
-            {/* end payment method */}
+            {/* end shipping detals */}
+            <Box>
+                <Flex
+                    pb={'10px'}
+                    mt={'20px'}
+                    justifyContent={'space-between'}
+                >
+                    <Text fontSize={'17px'}>{t.offersDiscounts}</Text>
+                </Flex>
+                <DetailsCard>
+                    <Flex alignItems={'center'}>
+                        <Image
+                            alt="shippingBtnImage"
+                            src={addShippingBtn}
+                        />{' '}
+                        <Text ml={'8px'}>
+                            <span style={{ fontWeight: 'bold' }}>
+                                ‘FirstLearn5k’
+                            </span>
+                            discount applied!
+                        </Text>
+                    </Flex>
+                </DetailsCard>
+            </Box>
             {/* start payment details */}
             {initRequest.data && (
                 <Box>
@@ -353,18 +311,11 @@ const CheckoutPage = () => {
                                 getSubTotalAndDeliveryCharges(initRequest.data)
                                     .subTotal
                             }`}
-                            deliveryChargesText={t.deliveryChargesText}
-                            deliveryChargesValue={`${t.currencySymbol} ${
-                                getSubTotalAndDeliveryCharges(initRequest.data)
-                                    .totalDeliveryCharge
-                            }`}
+                            deliveryChargesText={t.discountApplied}
+                            deliveryChargesValue={`- ${t.currencySymbol} ${getSubTotalAndDeliveryCharges(initRequest.data)
+                                .subTotal}`}
                             totalText={t.totalText}
-                            totalValue={`${
-                                getSubTotalAndDeliveryCharges(initRequest.data)
-                                    .subTotal +
-                                getSubTotalAndDeliveryCharges(initRequest.data)
-                                    .totalDeliveryCharge
-                            }`}
+                            totalValue={'0.00'}
                         />
                     </DetailsCard>
                 </Box>
@@ -378,7 +329,7 @@ const CheckoutPage = () => {
                     bottom={'0'}
                 >
                     <ButtonComp
-                        buttonText={t.proceedToPay}
+                        buttonText={t.continue}
                         background={'rgba(var(--color-primary))'}
                         color={'rgba(var(--text-color))'}
                         handleOnClick={() => {}}
@@ -387,7 +338,7 @@ const CheckoutPage = () => {
                 </Box>
             ) : (
                 <ButtonComp
-                    buttonText={t.proceedToCheckout}
+                    buttonText={t.continue}
                     background={'rgba(var(--color-primary))'}
                     color={'rgba(var(--text-color))'}
                     handleOnClick={() => router.push('/paymentMode')}
