@@ -75,12 +75,12 @@ const getHeaderTitleForPage = (
     const values = locale === 'en' ? headerValues : headerValuesFrench
     switch (true) {
         case storeHeaderBlackList.includes(pathName):
-            return <Text>{values[pathName]}</Text>
+            return <Text fontWeight={600}>{values[pathName]}</Text>
         default:
             return (
                 <Box
                     width={'260px'}
-                    className="md:hidden ml-2  flex gap-1 my-2"
+                    className="flex gap-1 my-2 ml-2 md:hidden"
                 >
                     <Text
                         margin={'0 auto'}
@@ -113,14 +113,14 @@ const TopHeader: React.FC<TopHeaderProps> = ({ handleMenuClick }) => {
     return (
         <>
             <div className="h-7 w-full bg-[#efefef] fixed z-[9999]">
-                <div className="px-5 h-full flex items-center">
+                <div className="flex items-center h-full px-5">
                     <div>
                         <Image
                             src="/images/CommerceLogo.svg"
                             alt="App logo"
                         />
                     </div>
-                    <div className="ml-auto flex gap-4">
+                    <div className="flex gap-4 ml-auto">
                         {languageIconWhiteList.includes(router.pathname) && (
                             <Settings />
                         )}
@@ -170,7 +170,7 @@ const TopHeader: React.FC<TopHeaderProps> = ({ handleMenuClick }) => {
                         src="/images/orderHistory.svg"
                         alt="Order history icon"
                     />
-                    {t['orderHistory']}
+                    {t['myCourses']}
                 </div>
             </BottomModal>
         </>
@@ -195,8 +195,8 @@ const BottomHeader = () => {
     return (
         <header className="md:fixed left-0 right-0 mb-4 top-0 md:bg-palette-fill shadow-sm pt-4 z-[1000] app_header_b fixed mt-7 z-[99] bg-[#fff]">
             <div className="flex flex-col md:px-4">
-                <div className="flex items-center justify-between md:order-2 md:mt-2 py-4  relative">
-                    <div className="flex gap-4 items-center">
+                <div className="relative flex items-center justify-between py-4 md:order-2 md:mt-2">
+                    <div className="flex items-center gap-4">
                         {!backIconList.includes(router.pathname) && (
                             <div onClick={() => router.back()}>
                                 <Image
