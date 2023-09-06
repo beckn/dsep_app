@@ -201,7 +201,7 @@ const en: { [key: string]: string } = {
     warranty: 'Warranty',
     addToCart: 'Add to Cart',
     stars: 'Star',
-    price: 'Product price',
+    price: 'Course price',
     similarProducts: 'You May Be Interested In',
     cart: 'Shopping Cart',
     hi: 'Hi!',
@@ -328,7 +328,7 @@ const en: { [key: string]: string } = {
     takeAway: 'Takeaway',
     bookstore: 'Bookstore',
     formName: 'Name',
-    formNumber: 'Mobile Number',
+    formNumber: 'Enter Mobile Number',
     formEmail: 'Email ID',
     formAddress: 'Complete Address',
     formZipCode: 'Pin Code',
@@ -379,7 +379,8 @@ const en: { [key: string]: string } = {
     cartEmptySpan: 'Look like you haven’t made your choice yet',
     goBackBtn: 'Go back home',
     viewCourseBtn: 'View Course Details',
-    naText: 'NA',
-    startCourse:"Start Course"
+    naText: 'Free Course',
+    startCourse: 'Start Course',
+    paymentStatusText: 'Not paid',
 }
 export default en
