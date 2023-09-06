@@ -23,7 +23,7 @@ export const validateForm = (formData: ShippingFormData): FormErrors => {
 
   if (formData.email.trim() === "") {
     errors.email = "errorEmail";
-  } else if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
+  } else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(formData.email)) {
     errors.email = "errorEmail2";
   }
 

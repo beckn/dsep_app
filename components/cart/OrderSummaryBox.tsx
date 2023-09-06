@@ -28,7 +28,7 @@ const OrderSummaryBox: React.FC<OrderSummaryBoxPropsModel> = (props) => {
                 <>
                     <h3
                         className=" sm:text-lg md:text-xl"
-                        style={{ fontSize: '17px' }}
+                        style={{ fontSize: '17px' , fontWeight:700}}
                     >
                         {t.orderSummary}
                     </h3>
@@ -43,16 +43,16 @@ const OrderSummaryBox: React.FC<OrderSummaryBoxPropsModel> = (props) => {
                             className="flex flex-col my-1 sm:my-2"
                             style={{ fontSize: '15px' }}
                         >
-                            <div className=" my-1 flex items-center justify-between md:my-4">
-                                <p className="text-md sm:text-base md:text-palette-base tracking-wide">
+                            <div className="flex items-center justify-between my-1 md:my-4">
+                                <p className="tracking-wide text-md sm:text-base md:text-palette-base">
                                     {t.totalQuantity}
                                 </p>
                                 <p className="rtl:ml-1 ltr:mr-1">
                                     {totalQuantity}
                                 </p>
                             </div>
-                            <div className=" my-1 flex flex-wrap items-baseline justify-between flex-grow md:my-4">
-                                <p className="text-md sm:text-base md:text-palette-base tracking-wide">
+                            <div className="flex flex-wrap items-baseline justify-between flex-grow my-1 md:my-4">
+                                <p className="tracking-wide text-md sm:text-base md:text-palette-base">
                                     {t.subtotalText}
                                 </p>
                                 <ProductPrice
@@ -64,8 +64,8 @@ const OrderSummaryBox: React.FC<OrderSummaryBoxPropsModel> = (props) => {
                                 />
                             </div>
                             <Divider my={'10px'} />
-                            <div className=" my-1 flex flex-wrap items-baseline justify-between flex-grow md:my-4">
-                                <p className="text-md sm:text-base md:text-palette-base tracking-wide font-extrabold">
+                            <div className="flex flex-wrap items-baseline justify-between flex-grow my-1 md:my-4">
+                                <p className="font-extrabold tracking-wide text-md sm:text-base md:text-palette-base">
                                     {t.totalText}
                                 </p>
                                 <ProductPrice
