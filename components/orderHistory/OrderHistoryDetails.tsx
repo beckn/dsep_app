@@ -44,7 +44,7 @@ const OrderHistoryDetails: React.FC<OrderHistoryDetailsPropsModel> = (
                 pb={'5px'}
                 fontSize={'12px'}
             >
-                ₹ {props.totalAmount}
+                ₹ 0.00
             </Text>
             <Flex
                 fontSize={'10px'}
