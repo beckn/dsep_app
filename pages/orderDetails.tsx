@@ -1,3 +1,4 @@
+
 import {
     Box,
     CardBody,
@@ -28,10 +29,11 @@ import useRequest from '../hooks/useRequest'
 import { useRouter } from 'next/router'
 import DetailsCard from '../components/detailsCard/DetailsCard'
 import Button from '../components/button/Button'
-
 const OrderDetails = () => {
     const [allOrderDelivered, setAllOrderDelivered] = useState(false)
     const [confirmData, setConfirmData] = useState<ResponseModel[]>([])
+    const [openedOrder, setOpenedOrder] = useState(null)
+    const [orderModals, setOrderModals] = useState({})
     const [statusResponse, setStatusResponse] = useState([])
     const { isOpen, onOpen, onClose } = useDisclosure()
     const transactionId = useSelector(
@@ -43,9 +45,7 @@ const OrderDetails = () => {
     const trackRequest = useRequest()
     const router = useRouter()
     const { orderId } = router.query
-
     const { t } = useLanguage()
-
     useEffect(() => {
         if (
             orderId &&
@@ -55,13 +55,10 @@ const OrderDetails = () => {
             const parsedOrderHistoryArray = JSON.parse(
                 localStorage.getItem('orderHistoryArray') as string
             )
-
             const relatedOrder = parsedOrderHistoryArray.find(
                 (parsedOrder: any) => parsedOrder.parentOrderId === orderId
             )
-
             setConfirmData(relatedOrder.orders)
-
             const confirmOrderMetaDataPerBpp = getConfirmMetaDataForBpp(
                 relatedOrder.orders
             )
@@ -73,13 +70,11 @@ const OrderDetails = () => {
                 confirmOrderMetaDataPerBpp,
                 transactionId
             )
-
             trackRequest.fetchData(
                 `${apiUrl}/client/v2/track`,
                 'POST',
                 payloadForTrackRequest
             )
-
             const intervalId = setInterval(() => {
                 statusRequest.fetchData(
                     `${apiUrl}/client/v2/status`,
@@ -87,21 +82,18 @@ const OrderDetails = () => {
                     payloadForStatusRequest
                 )
             }, 2000)
-
             return () => {
                 clearInterval(intervalId)
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
-
     useEffect(() => {
         if (localStorage) {
             const stringifiedConfirmData = localStorage.getItem('confirmData')
             if (stringifiedConfirmData) {
                 const parsedConfirmedData = JSON.parse(stringifiedConfirmData)
                 setConfirmData(parsedConfirmedData)
-
                 const confirmOrderMetaDataPerBpp =
                     getConfirmMetaDataForBpp(parsedConfirmedData)
                 const payloadForStatusRequest = getPayloadForStatusRequest(
@@ -112,13 +104,11 @@ const OrderDetails = () => {
                     confirmOrderMetaDataPerBpp,
                     transactionId
                 )
-
                 trackRequest.fetchData(
                     `${apiUrl}/client/v2/track`,
                     'POST',
                     payloadForTrackRequest
                 )
-
                 const intervalId = setInterval(() => {
                     statusRequest.fetchData(
                         `${apiUrl}/client/v2/status`,
@@ -126,7 +116,6 @@ const OrderDetails = () => {
                         payloadForStatusRequest
                     )
                 }, 2000)
-
                 return () => {
                     clearInterval(intervalId)
                 }
@@ -134,7 +123,6 @@ const OrderDetails = () => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
-
     useEffect(() => {
         if (statusRequest.data) {
             setStatusResponse(statusRequest.data as any)
@@ -147,23 +135,16 @@ const OrderDetails = () => {
             }
         }
     }, [statusRequest.data])
-
     //   console.log("confirmData", confirmData);
-
     if (!confirmData.length) {
         return <></>
     }
-
     const confirmDataPerBpp = getDataPerBpp(confirmData)
-
     const orderFromConfirmData =
         confirmData[0].message.responses[0].message.order
-
     const { subTotal, totalDeliveryCharge } =
         getSubTotalAndDeliveryChargesForOrder(confirmData)
-
     const orderState = orderFromConfirmData.payment.status
-
     const totalQuantityOfOrder = (res: any) => {
         let count = 0
         res.message.order.items.forEach((item: any) => {
@@ -171,30 +152,24 @@ const OrderDetails = () => {
         })
         return count
     }
-
     const getExtractedName = (str: string) => {
         const parts = str
             .trim()
             .split('/')
             .filter((part) => part !== '')
         const extracted = parts[parts.length - 1]
-
         return extracted
     }
-
     const shippingDetails = {
         name: getExtractedName(orderFromConfirmData.billing.name),
         address: orderFromConfirmData.billing.address.state,
         phone: orderFromConfirmData.billing.phone,
     }
-
     const handleViewCource = () => {
         let courseUrl = ''
-
         Object.keys(confirmDataPerBpp).map((key) => {
             courseUrl = confirmDataPerBpp[key].items[0].tags.Url
         })
-
         window.open(courseUrl, '_blank')
     }
     return (
@@ -292,16 +267,27 @@ const OrderDetails = () => {
                     ))}
                 </CardBody>
             </Accordion>
-
             {statusResponse.map((res: any, index: number) => (
                 <div key={index}>
-                    <ViewMoreOrderModal
-                        isOpen={isOpen}
-                        onOpen={onOpen}
-                        onClose={onClose}
-                        items={res.message.order.items}
-                        orderId={res.message.order.displayId}
-                    />
+                    {orderModals[res.message.order.displayId] && (
+                        <ViewMoreOrderModal
+                            isOpen={true}
+                            onOpen={() =>
+                                setOrderModals({
+                                    ...orderModals,
+                                    [res.message.order.displayId]: true,
+                                })
+                            }
+                            onClose={() =>
+                                setOrderModals({
+                                    ...orderModals,
+                                    [res.message.order.displayId]: false,
+                                })
+                            }
+                            items={res.message.order.items}
+                            orderId={res.message.order.displayId}
+                        />
+                    )}
                     <Divider mb={'20px'} />
                     <DetailsCard>
                         <Box>
@@ -317,7 +303,6 @@ const OrderDetails = () => {
                                 >
                                     {t.orderId}:
                                 </Text>
-
                                 <Text
                                     textOverflow={'ellipsis'}
                                     overflow={'hidden'}
@@ -349,7 +334,16 @@ const OrderDetails = () => {
                                             color={'rgba(var(--color-primary))'}
                                             fontSize={'12px'}
                                             fontWeight={'600'}
-                                            onClick={onOpen}
+                                            onClick={() => {
+                                                setOpenedOrder(
+                                                    res.message.order.displayId
+                                                )
+                                                setOrderModals({
+                                                    ...orderModals,
+                                                    [res.message.order
+                                                        .displayId]: true,
+                                                })
+                                            }}
                                         >
                                             +{totalQuantityOfOrder(res) - 1}
                                         </Text>
@@ -426,5 +420,4 @@ const OrderDetails = () => {
         </>
     )
 }
-
 export default OrderDetails
