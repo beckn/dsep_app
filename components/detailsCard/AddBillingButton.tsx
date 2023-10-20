@@ -28,6 +28,7 @@ const AddBillingButton: React.FC<AddBillingButtonProps> = (props) => {
                 ) : null}
                 <Text
                     fontSize={'15px'}
+                    fontWeight={600}
                     color={'rgba(var(--color-primary))'}
                     pl={'10px'}
                 >
