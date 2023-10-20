@@ -22,7 +22,7 @@ const CoursePlayer = () => {
                 controls
                 width="100%"
                 height="100%"
-                url="https://www.youtube.com/watch?v=LXb3EKWsInQ"
+                url="https://www.youtube.com/watch?v=9VIiLJL0H4Y&list=PLC3y8-rFHvwgg3vaYJgHGnModB54rxOk3&index=3"
             />
 
             <Text
