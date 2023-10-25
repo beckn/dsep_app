@@ -65,8 +65,8 @@ const MobileLogin = () => {
                         />
 
                         {phoneNumberError && (
-                <span className={style.error}>
-                  {t.phoneNumberError}
+                            <span className={style.error}>
+                                {t.phoneNumberError}
                             </span>
                         )}
 

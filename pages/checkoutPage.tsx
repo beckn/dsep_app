@@ -176,7 +176,7 @@ const CheckoutPage = () => {
     }
 
     if (initRequest.loading) {
-        return <Loader loadingText={t['initializingOrderLoader']} />
+        return <Loader loadingText={t.initializingOrderLoader} />
     }
 
     const isInitResultPresent = () => {
@@ -312,8 +312,10 @@ const CheckoutPage = () => {
                                     .subTotal
                             }`}
                             deliveryChargesText={t.discountApplied}
-                            deliveryChargesValue={`- ${t.currencySymbol} ${getSubTotalAndDeliveryCharges(initRequest.data)
-                                .subTotal}`}
+                            deliveryChargesValue={`- ${t.currencySymbol} ${
+                                getSubTotalAndDeliveryCharges(initRequest.data)
+                                    .subTotal
+                            }`}
                             totalText={t.totalText}
                             totalValue={'0.00'}
                         />
