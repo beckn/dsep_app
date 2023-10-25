@@ -1,10 +1,10 @@
-import { Box, Image, Input } from '@chakra-ui/react'
+import { Box, Image } from '@chakra-ui/react'
+import Router from 'next/router'
 import React, { useEffect, useState } from 'react'
+import Button from '../components/button/Button'
+import style from '../components/detailsCard/ShippingForm.module.css'
 import { useLanguage } from '../hooks/useLanguage'
 import LoginIcon from '../public/images/LoginIcon.svg'
-import style from '../components/detailsCard/ShippingForm.module.css'
-import Button from '../components/button/Button'
-import Router from 'next/router'
 
 const MobileLogin = () => {
     const [phoneNumber, setPhoneNumber] = useState('')
@@ -65,8 +65,8 @@ const MobileLogin = () => {
                         />
 
                         {phoneNumberError && (
-                            <span className={style.error}>
-                                {t[`${phoneNumberError}`]}
+                <span className={style.error}>
+                  {t.phoneNumberError}
                             </span>
                         )}
 

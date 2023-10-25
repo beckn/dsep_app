@@ -2,11 +2,13 @@
 
 const nextConfig = {
     reactStrictMode: false,
-    output: 'export',
+  i18n: {
+      locales: ['en', 'pt'],
+      defaultLocale: 'en',
+      localeDetection: false
+    },
     trailingSlash: true,
     images: {
-        loader: 'akamai',
-        path: '',
         domains: [
             'cdn.sanity.io',
             'bazaar.becknprotocol.io',
