@@ -267,7 +267,7 @@ const en: { [key: string]: string } = {
     billing: 'Billing',
     changeText: 'Change',
     paymentText: 'Payment',
-    soldBy:"Sold by ",
+    soldBy: 'Sold by ',
     orderDetailsCheckboxText: 'Same as Shipping Details',
     subtotalText: 'Subtotal',
     deliveryChargesText: 'Delivery Charges',
@@ -283,7 +283,7 @@ const en: { [key: string]: string } = {
     discountApplied: 'Discount Applied',
     offersDiscounts: 'Offers & Discounts',
     orderHistory: 'Order history',
-    myCourses:"My Courses",
+    myCourses: 'My Courses',
     bottomModalTitle: 'Search',
     optionRestaurants: 'Restaurants',
     optionRestaurant: 'Restaurant',
@@ -382,5 +382,7 @@ const en: { [key: string]: string } = {
     naText: 'Free Course',
     startCourse: 'Start Course',
     paymentStatusText: 'Not paid',
+    viewCourse: 'View Course',
+    fetchingOrderStatus: 'Fetching Order details',
 }
 export default en

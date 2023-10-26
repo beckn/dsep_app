@@ -7,6 +7,7 @@ import {
     Image,
     Card,
     useDisclosure,
+    Spinner,
 } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import Accordion from '../components/accordion/Accordion'
@@ -23,18 +24,21 @@ import { getSubTotalAndDeliveryChargesForOrder } from '../utilities/orderHistory
 import TrackIcon from '../public/images/TrackIcon.svg'
 import ViewMoreOrderModal from '../components/orderDetails/ViewMoreOrderModal'
 import { useSelector } from 'react-redux'
-import { TransactionIdRootState } from '../lib/types/cart'
+import { ICartRootState, TransactionIdRootState } from '../lib/types/cart'
 import useRequest from '../hooks/useRequest'
 import { useRouter } from 'next/router'
 import DetailsCard from '../components/detailsCard/DetailsCard'
 import Button from '../components/button/Button'
+import { toBinary } from '../utilities/common-utils'
+import Loader from '../components/loader/Loader'
+
 const OrderDetails = () => {
     const [allOrderDelivered, setAllOrderDelivered] = useState(false)
     const [confirmData, setConfirmData] = useState<ResponseModel[]>([])
-    const [openedOrder, setOpenedOrder] = useState(null)
-    const [orderModals, setOrderModals] = useState({})
     const [statusResponse, setStatusResponse] = useState([])
     const { isOpen, onOpen, onClose } = useDisclosure()
+    const [status, setStatus] = useState('progress')
+    const [itemsSelected, setItemsSelected] = useState([])
     const transactionId = useSelector(
         (state: { transactionId: TransactionIdRootState }) =>
             state.transactionId
@@ -45,6 +49,18 @@ const OrderDetails = () => {
     const router = useRouter()
     const { orderId } = router.query
     const { t } = useLanguage()
+    const cartItems = useSelector((state: ICartRootState) => state.cart.items)
+
+    useEffect(() => {
+        if (localStorage && localStorage.getItem('itemsForSelect')) {
+            const stringifiedItems = localStorage.getItem('itemsForSelect')
+            if (stringifiedItems) {
+                const parsedSelectedItems = JSON.parse(stringifiedItems)
+                setItemsSelected(parsedSelectedItems)
+            }
+        }
+    }, [])
+
     useEffect(() => {
         if (
             orderId &&
@@ -87,6 +103,7 @@ const OrderDetails = () => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+
     useEffect(() => {
         if (localStorage) {
             const stringifiedConfirmData = localStorage.getItem('confirmData')
@@ -122,6 +139,7 @@ const OrderDetails = () => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+
     useEffect(() => {
         if (statusRequest.data) {
             setStatusResponse(statusRequest.data as any)
@@ -134,7 +152,7 @@ const OrderDetails = () => {
             }
         }
     }, [statusRequest.data])
-    //   console.log("confirmData", confirmData);
+
     if (!confirmData.length) {
         return <></>
     }
@@ -164,14 +182,19 @@ const OrderDetails = () => {
         address: orderFromConfirmData.billing.address.state,
         phone: orderFromConfirmData.billing.phone,
     }
-    const handleViewCource = () => {
-        let courseUrl = ''
-        // Object.keys(confirmDataPerBpp).map((key) => {
-        //     courseUrl = confirmDataPerBpp[key].items[0].tags.Url
-        // })
-        // window.open(courseUrl, '_blank')
-        router.push('/coursePlayer')
+    const handleViewCource = (itemId: any) => {
+        router.push(`/coursePlayer?itemId=${itemId}`)
     }
+
+    if (!statusResponse.length) {
+        return (
+            <Loader
+                stylesForLoadingText={{ fontWeight: '600' }}
+                loadingText={t.fetchingOrderStatus}
+            />
+        )
+    }
+
     return (
         <>
             {allOrderDelivered ? (
@@ -267,93 +290,138 @@ const OrderDetails = () => {
                     ))}
                 </CardBody>
             </Accordion>
-            {statusResponse.map((res: any, index: number) => (
-                <div key={index}>
-                    {orderModals[res.message.order.displayId] && (
-                        <ViewMoreOrderModal
-                            isOpen={true}
-                            onOpen={() =>
-                                setOrderModals({
-                                    ...orderModals,
-                                    [res.message.order.displayId]: true,
-                                })
-                            }
-                            onClose={() =>
-                                setOrderModals({
-                                    ...orderModals,
-                                    [res.message.order.displayId]: false,
-                                })
-                            }
-                            items={res.message.order.items}
-                            orderId={res.message.order.displayId}
-                        />
-                    )}
-                    <Divider mb={'20px'} />
-                    <DetailsCard>
-                        <Box>
-                            <Flex
-                                mb={'15px'}
-                                fontSize={'17px'}
-                                alignItems={'center'}
-                            >
-                                <Text
-                                    fontWeight={600}
+
+            {statusResponse.map((res: any, index: number) => {
+                return (
+                    <Accordion
+                        key={index}
+                        accordionHeader={
+                            <Box>
+                                <Flex
+                                    mb={'15px'}
                                     fontSize={'17px'}
-                                    pr={'8px'}
+                                    alignItems={'center'}
                                 >
-                                    {t.orderId}:
-                                </Text>
-                                <Text
-                                    textOverflow={'ellipsis'}
-                                    overflow={'hidden'}
-                                    whiteSpace={'nowrap'}
-                                >
-                                    {res.message.order.displayId}
-                                </Text>
-                            </Flex>
-                            <Flex
-                                justifyContent={'space-between'}
-                                alignItems={'center'}
-                            >
-                                <Flex maxWidth={'57vw'}>
+                                    <Text
+                                        fontWeight={600}
+                                        fontSize={'17px'}
+                                        pr={'8px'}
+                                    >
+                                        {t.orderId}:
+                                    </Text>
+
                                     <Text
                                         textOverflow={'ellipsis'}
                                         overflow={'hidden'}
                                         whiteSpace={'nowrap'}
-                                        fontSize={'12px'}
-                                        fontWeight={'400'}
                                     >
-                                        {
-                                            res.message.order.items[0]
-                                                .descriptor.name
-                                        }
+                                        {res.message.order.displayId}
                                     </Text>
-                                    {totalQuantityOfOrder(res) !== 1 && (
+                                </Flex>
+                                <Flex
+                                    justifyContent={'space-between'}
+                                    alignItems={'center'}
+                                >
+                                    <Flex maxWidth={'57vw'}>
                                         <Text
-                                            pl={'5px'}
-                                            color={'rgba(var(--color-primary))'}
+                                            textOverflow={'ellipsis'}
+                                            overflow={'hidden'}
+                                            whiteSpace={'nowrap'}
                                             fontSize={'12px'}
-                                            fontWeight={'600'}
-                                            onClick={() => {
-                                                setOpenedOrder(
-                                                    res.message.order.displayId
-                                                )
-                                                setOrderModals({
-                                                    ...orderModals,
-                                                    [res.message.order
-                                                        .displayId]: true,
-                                                })
-                                            }}
+                                            fontWeight={'400'}
                                         >
-                                            +{totalQuantityOfOrder(res) - 1}
+                                            {
+                                                res.message.order.items[0]
+                                                    .descriptor.name
+                                            }
+                                        </Text>
+                                        {totalQuantityOfOrder(res) !== 1 && (
+                                            <Text
+                                                pl={'5px'}
+                                                color={
+                                                    'rgba(var(--color-primary))'
+                                                }
+                                                fontSize={'12px'}
+                                                fontWeight={'600'}
+                                                onClick={onOpen}
+                                            >
+                                                +{totalQuantityOfOrder(res) - 1}
+                                            </Text>
+                                        )}
+                                    </Flex>
+                                    {status === 'progress' ? (
+                                        <Text
+                                            fontSize={'12px'}
+                                            fontWeight="600"
+                                            color={'#FDC025'}
+                                        >
+                                            In Progress
+                                        </Text>
+                                    ) : (
+                                        <Text
+                                            fontSize={'12px'}
+                                            fontWeight="600"
+                                            color={'#5EC401'}
+                                        >
+                                            Completed
                                         </Text>
                                     )}
                                 </Flex>
-                            </Flex>
-                        </Box>
-                    </DetailsCard>
-                </div>
-            ))}
+                            </Box>
+                        }
+                    >
+                        <ViewMoreOrderModal
+                            isOpen={isOpen}
+                            onOpen={onOpen}
+                            onClose={onClose}
+                            items={res.message.order.items}
+                            orderId={res.message.order.displayId}
+                        />
+                        <Divider mb={'20px'} />
+                        <CardBody
+                            pt={'unset'}
+                            fontSize={'15px'}
+                        >
+                            <Box>
+                                <Flex alignItems={'center'}>
+                                    <Image
+                                        src="/images/done.svg"
+                                        alt=""
+                                    />
+                                    <Text
+                                        pl={'8px'}
+                                        fontSize="15px"
+                                        fontWeight={'600'}
+                                    >
+                                        Courses Purchased
+                                    </Text>
+                                </Flex>
+                                <Text
+                                    pl="28px"
+                                    fontSize={'12px'}
+                                >
+                                    21st Jun 2021, 12:11pm
+                                </Text>
+                            </Box>
+                            {status === 'progress' ? (
+                                <Box
+                                    fontSize={'15px'}
+                                    color={'rgba(var(--color-primary))'}
+                                    pt="10px"
+                                    pl="28px"
+                                    onClick={() =>
+                                        handleViewCource(
+                                            res.message.order.items[0].id
+                                        )
+                                    }
+                                >
+                                    {t.viewCourse}
+                                </Box>
+                            ) : null}
+                        </CardBody>
+                    </Accordion>
+                )
+            })}
             <Accordion accordionHeader={t.paymentText}>
                 <CardBody
                     pt={'unset'}
@@ -408,15 +476,6 @@ const OrderDetails = () => {
                     </Flex>
                 </CardBody>
             </Accordion>
-            <Box mt={'40px'}>
-                <Button
-                    buttonText={t.startCourse}
-                    background={'rgba(var(--color-primary))'}
-                    color={'rgba(var(--text-color))'}
-                    isDisabled={false}
-                    handleOnClick={handleViewCource}
-                />
-            </Box>
         </>
     )
 }

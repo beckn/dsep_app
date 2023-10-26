@@ -361,5 +361,7 @@ const fa: { [key: string]: string } = {
     addCommentsHere: 'Ajoutez vos commentaires ici',
     writeExperience: 'Décrivez votre expérience..',
     completed: 'Complété',
+    viewCourse: 'Voir le cours',
+    fetchingOrderStatus: 'Fetching Order details',
 }
 export default fa

@@ -18,6 +18,7 @@ const cartIconBlackList = [
     '/cart',
     '/checkoutPage',
     '/paymentMode',
+    '/coursePlayer',
 ]
 
 const backIconList = ['/', '/orderDetails']
