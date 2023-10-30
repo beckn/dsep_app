@@ -64,12 +64,11 @@ function PaymentMode() {
                 width={'90%'}
             >
                 <Button
-                    buttonText={t.confirmOrder}
+                    buttonText={t.continue}
                     background={'rgba(var(--color-primary))'}
                     color={'rgba(var(--text-color))'}
                     isDisabled={!checked}
                     handleOnClick={() => {
-                        dispatch(cartActions.clearCart())
                         router.push('/orderConfirmation')
                     }}
                 />
