@@ -72,6 +72,9 @@ const CheckoutPage = () => {
   const { t, locale } = useLanguage();
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const cartItems = useSelector((state: ICartRootState) => state.cart.items);
+  const totalAmount = useSelector(
+    (state: ICartRootState) => state.cart.totalAmount
+)
   const transactionId = useSelector(
     (state: { transactionId: TransactionIdRootState }) => state.transactionId
   );
@@ -189,7 +192,6 @@ const CheckoutPage = () => {
 
     return !!initRequest.data;
   };
-
   return (
     <>
       {/* <AppHeader appHeaderText={t.checkout} /> */}
@@ -200,16 +202,6 @@ const CheckoutPage = () => {
             {t.items}
           </Text>
         </Box>
-        {/* {cartItems.map((item) => (
-          <DetailsCard key={item.id}>
-            <ItemDetails
-              title={item.descriptor.name}
-              description={item.descriptor.short_desc}
-              quantity={item.quantity}
-              price={`${t.currencySymbol}${item.totalPrice}`}
-            />
-          </DetailsCard>
-        ))} */}
         <DetailsCard>
           {cartItems.map((item, id) => {
             return (
@@ -218,7 +210,7 @@ const CheckoutPage = () => {
                   title={item.descriptor.name}
                   provider={(item as any).bppName}
                   quantity={item.quantity}
-                  price={item.totalPrice}
+                  price={totalAmount}
                 />
                 {cartItems.length - 1 !== id ? <Divider mb={"15px"} /> : null}
               </>
