@@ -14,7 +14,7 @@ import React from 'react'
 import ButtonComp from '../button/Button'
 import crossIcon from '../../public/images/crossIcon.svg'
 import { useLanguage } from '../../hooks/useLanguage'
-import { generateAlphanumericID } from '../../utilities/orderDetails-utils'
+import { useRouter } from 'next/router'
 
 export interface ViewMoreOrderModalProps {
     isOpen: boolean
@@ -26,6 +26,11 @@ export interface ViewMoreOrderModalProps {
 
 const ViewMoreOrderModal: React.FC<ViewMoreOrderModalProps> = (props) => {
     const { t } = useLanguage()
+    const router = useRouter()
+    const handleViewCource = (itemId: any) => {
+        router.push(`/coursePlayer?itemId=${itemId}`)
+    }
+
     return (
         <>
             <Modal
@@ -62,25 +67,41 @@ const ViewMoreOrderModal: React.FC<ViewMoreOrderModalProps> = (props) => {
                     </Box>
 
                     <ModalBody padding={'15px 20px'}>
-                        {props.items.map((item: any) => {
+                        {props.items.map((item: any, index: number) => {
                             return (
-                                <Flex
-                                    key={item.id}
+                                <Box
                                     mb={'20px'}
-                                    justifyContent={'space-between'}
+                                    key={index}
                                 >
-                                    <Box>
-                                        <Text>{item.descriptor.name}</Text>
-                                    </Box>
-                                    <Text
-                                        fontSize={'15px'}
-                                        fontWeight={'600'}
-                                        color={'rgba(var(--color-primary))'}
+                                    <Flex
+                                        key={item.id}
+                                        justifyContent={'space-between'}
                                     >
-                                        {t.currencySymbol}
-                                        {item.price.offered_value}
-                                    </Text>
-                                </Flex>
+                                        <Box>
+                                            <Text>{item.descriptor.name}</Text>
+                                        </Box>
+
+                                        <Text
+                                            fontSize={'15px'}
+                                            fontWeight={'600'}
+                                            color={'rgba(var(--color-primary))'}
+                                        >
+                                            {t.currencySymbol}
+                                            {item.price.offered_value}
+                                        </Text>
+                                    </Flex>
+                                    <Box
+                                        cursor={'pointer'}
+                                        fontSize={'15px'}
+                                        color={'rgba(var(--color-primary))'}
+                                        pt="5px"
+                                        onClick={() =>
+                                            handleViewCource(item.id)
+                                        }
+                                    >
+                                        {t.viewCourse}
+                                    </Box>
+                                </Box>
                             )
                         })}
 

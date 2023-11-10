@@ -166,6 +166,7 @@ const Search = () => {
                             stylesForLoadingText={{
                                 fontWeight: '600',
                                 fontSize: '16px',
+                                color:"#7C7C7C"
                             }}
                             subLoadingText={t.coursesCatalogLoader}
                             loadingText={t.catalogLoader}
